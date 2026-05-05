@@ -1,509 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RYXN — Electronic Press Kit</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:ital,wght@0,200;0,300;0,400;0,700;0,900;1,200;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  </head>
-  <body>
-    <!-- LOADER -->
-    <div id="loader">
-      <div class="ld-name">RYXN</div>
-      <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>THE ARTIST — Electronic Press Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:ital,wght@0,200;0,300;0,400;0,700;0,900;1,200;1,900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/styles.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+</head>
+<body>
+
+<div id="loader"><div class="ld-name">ARTIST</div><div class="ld-track"><div class="ld-fill" id="lf"></div></div></div>
+<div id="cd"></div>
+<div id="cr"></div>
+<div id="grain"></div>
+<button id="btt" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 14 14"><polyline points="2,10 7,4 12,10"/></svg>
+</button>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <div class="lb-close" id="lb-close">[ CLOSE ]</div>
+    <div class="lb-art" id="lb-art"></div>
+    <div class="lb-caption">
+      <span class="lb-num" id="lb-num">01 / 12</span>
+      <span class="lb-photo-caption" id="lb-caption-text"></span>
+      <div class="lb-arrows">
+        <span class="lb-arrow" id="lb-prev">← PREV</span>
+        <span class="lb-arrow" id="lb-next">NEXT →</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">ARTIST</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#identity">Identity</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#vault">The Vault</a></li>
+    <li><a href="#reach">Tap In</a></li>
+  </ul>
+  <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- ═══ HERO BACKGROUND IMAGE ═══ Replace src with your photo path/URL -->
+  <img class="hero-bg-img" id="heroBgImg"
+       src="https://images.unsplash.com/photo-1526218626217-dc65a29bb444?w=1600&q=80&fit=crop&crop=top"
+       alt="" />
+  <div class="hero-bg-fade"></div>
+  <canvas id="hc"></canvas>
+  <div class="hero-slash"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">ZA · MMXXVI · JOHANNESBURG</div>
+    <h1 class="hero-name" data-text="ARTIST">ARTIST</h1>
+    <div class="hero-div"></div>
+    <div class="hero-meta">
+      <span class="on">Rapper</span><span>Creative</span><span>Photography</span><span>Street</span>
+    </div>
+  </div>
+  <div class="scroll-cue"></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq-strip"><div class="mq-inner">
+  <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
+  <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
+  <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
+  <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
+  <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
+  <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
+  <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
+  <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
+  <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
+  <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
+  <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
+  <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
+  <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
+  <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
+</div></div>
+
+<!-- IDENTITY -->
+<section id="identity">
+  <!-- ═══ IDENTITY BACKGROUND IMAGE ═══ Replace src with your photo -->
+  <img class="id-bg-img" id="idBgImg"
+       src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&q=80&auto=format&fit=crop"
+       alt="" />
+  <div class="id-bg-fade"></div>
+  <div class="id-inner">
+    <div>
+      <div class="id-num reveal">001</div>
+      <div class="id-over reveal rd1">Identity</div>
+      <h2 class="id-stmt">
+        <div class="stag-line"><span class="stag-inner pword" data-speed="-0.07">Born From</span></div>
+        <div class="stag-line"><span class="stag-inner pword" data-speed="0.1"><em>Concrete.</em></span></div>
+        <div class="stag-line"><span class="stag-inner pword" data-speed="-0.055">Forged In</span></div>
+        <div class="stag-line"><span class="stag-inner pword" data-speed="0.09">Motion.</span></div>
+      </h2>
+    </div>
+    <div>
+      <p class="id-bio reveal rd2">The Artist is a South African rapper, photographer, and street creative based in Johannesburg. His work sits at the intersection of raw urban storytelling and deliberate artistic vision — where the concrete speaks and silence has texture.<br><br>Drawing from the pulse of Jozi's streets, he constructs worlds rather than songs. Each project is a frame. Each verse, a photograph. Each drop, a statement carved from the city he calls home.</p>
+      <div class="id-tags reveal rd3">
+        <div class="id-tag"><span>Rap</span></div>
+        <div class="id-tag"><span>Street Photography</span></div>
+        <div class="id-tag"><span>Fashion</span></div>
+        <div class="id-tag"><span>Johannesburg</span></div>
+        <div class="id-tag"><span>Multidisciplinary</span></div>
+        <div class="id-tag"><span>Independent</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="id-wm">ARTIST</div>
+</section>
+
+<!-- ARCHIVE -->
+<section id="archive">
+  <!-- ═══ DISCOGRAPHY BACKGROUND IMAGE ═══ Replace src with your photo -->
+  <img class="arch-bg-img" id="archBgImg"
+       src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop"
+       alt="" />
+  <div class="arch-bg-mask"></div>
+  <div style="position:relative;z-index:2">
+  <div class="section-tag reveal">002 — The Archive</div>
+  <h2 class="arch-hd reveal rd1">Disco<span>g</span>raphy</h2>
+  <div class="arts-grid">
+    <div class="art-item featured">
+      <div class="vw"><div class="vd"><div class="vl r"><div class="vl-t">ARTIST<br>×<br>JHB</div></div><div class="vh"></div></div></div>
+      <div class="art-meta reveal rd1"><div class="art-title">Artist × JHB</div><div class="art-sub">MMXXVI · EP · 6 Tracks</div><div class="art-lbl">LATEST RELEASE</div></div>
+    </div>
+    <div class="art-item">
+      <div class="cw"><div class="cb"><div class="csc tl"></div><div class="csc tr"></div><div class="cwin"><div class="reel"></div><div class="reel"></div></div><div class="cls"><span class="ct">MOTION TAPE</span><span class="cy">MMXXV</span></div></div></div>
+      <div class="art-meta reveal rd2"><div class="art-title">Motion Tape</div><div class="art-sub">MMXXV · Mixtape · 12 Tracks</div><div class="art-lbl">STREET RELEASE</div></div>
+    </div>
+    <div class="art-item">
+      <div class="vw"><div class="vd"><div class="vl d"><div class="vl-t">CONCRETE<br>EP</div></div><div class="vh"></div></div></div>
+      <div class="art-meta reveal rd3"><div class="art-title">Concrete EP</div><div class="art-sub">MMXXIV · EP · 7 Tracks</div><div class="art-lbl">DEBUT PROJECT</div></div>
+    </div>
+  </div>
+  </div><!-- /z-index wrapper -->
+  <div class="arch-bg">ARCHIVE</div>
+</section>
+
+<!-- THE VAULT -->
+<section id="vault">
+  <div class="vault-top">
+    <div class="section-tag reveal">003 — The Vault</div>
+    <h2 class="vault-hd reveal rd1">Press <em>Kit</em></h2>
+  </div>
+  <div class="vault-tabs" id="vaultTabs">
+    <div class="v-tab on" data-tab="music">Performances</div>
+    <div class="v-tab" data-tab="youtube">YouTube</div>
+    <div class="v-tab" data-tab="photos">Photos</div>
+    <div class="v-tab" data-tab="press">Press</div>
+  </div>
+  <div class="vault-panels">
+
+    <!-- MUSIC / PERFORMANCES -->
+    <div class="v-panel on" data-tab="music" id="perfPanel">
+      <!-- Built by JS from PERFORMANCES config -->
     </div>
 
-    <!-- CURSOR -->
-    <div id="cd"></div>
-    <div id="cr"></div>
+    <!-- YOUTUBE -->
+    <div class="v-panel" data-tab="youtube" id="ytPanel">
+      <!-- Built by JS from VIDEOS config -->
+    </div>
 
-    <!-- GRAIN -->
-    <div id="grain"></div>
+    <!-- PHOTOS -->
+    <div class="v-panel" data-tab="photos">
+      <div class="photo-section-label">Photoshoots</div>
+      <div class="film-scroll-wrap" id="filmScrollWrap">
+        <div class="film-outer" id="filmOuter"></div>
+      </div>
+      <div class="photo-section-label street-grid-label">Street / JHB Series</div>
+      <div class="street-grid" id="streetGrid"></div>
+    </div>
 
-    <!-- BACK TO TOP -->
-    <button
-      id="btt"
-      aria-label="Back to top"
-      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    >
-      <svg viewBox="0 0 14 14"><polyline points="2,10 7,4 12,10" /></svg>
-    </button>
-
-    <!-- LIGHTBOX -->
-    <div id="lightbox">
-      <div class="lb-inner">
-        <div class="lb-close" id="lb-close">[ CLOSE ]</div>
-        <div class="lb-art" id="lb-art"></div>
-        <div class="lb-caption">
-          <span class="lb-num" id="lb-num">01 / 12</span>
-          <div class="lb-arrows">
-            <span class="lb-arrow" id="lb-prev">← PREV</span>
-            <span class="lb-arrow" id="lb-next">NEXT →</span>
+    <!-- PRESS -->
+    <div class="v-panel" data-tab="press">
+      <div class="press-layout">
+        <div>
+          <div class="press-bio-label">Press Bio</div>
+          <div class="press-bio-text">
+            <!-- ═══ EDIT BIO HERE ═══ -->
+            <p><strong>The Artist</strong> is a Johannesburg-born rapper, photographer, and multidisciplinary street creative carving his own lane at the intersection of South African hip-hop and visual culture. Raised on the concrete rhythms of Jozi, his music is as much architecture as it is sound — each track a deliberate frame, each project a world built from the ground up.</p>
+            <p>His debut <em>Concrete EP</em> announced an artist uninterested in template thinking — raw, considered, street-rooted but never confined to it. The follow-up <em>Motion Tape</em> expanded the universe, blending photography, fashion, and verse into something that resists genre. His latest EP, <em>Artist × JHB</em>, is the most complete statement yet: six tracks that document a city, a generation, and a creative refusing to wait for permission.</p>
+            <!-- Add a third paragraph here if needed:
+            <p>...</p> -->
           </div>
+          <div class="press-tap-note">For all bookings, press and collaboration enquiries — <a href="#reach">Tap In below.</a></div>
+          <div class="press-quotes">
+            <div class="press-quotes-label">Words</div>
+            <!-- ═══ EDIT QUOTES HERE ═══ -->
+            <div class="pull-quote">
+              <div class="pull-quote-text">One of Jozi's most deliberate young voices — he doesn't just rap, he documents.</div>
+              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
+            </div>
+            <div class="pull-quote">
+              <div class="pull-quote-text">Artist × JHB feels like a city talking back.</div>
+              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
+            </div>
+            <div class="pull-quote">
+              <div class="pull-quote-text">Street photography, fashion and rap — he moves between all three without losing himself in any.</div>
+              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
+            </div>
+          </div>
+        </div>
+        <div class="press-sidebar">
+          <div class="press-facts-label">Key Facts</div>
+          <!-- ═══ EDIT FACTS HERE ═══ -->
+          <div class="fact-row"><div class="fact-key">Based In</div><div class="fact-val">Johannesburg, South Africa</div></div>
+          <div class="fact-row"><div class="fact-key">Genre</div><div class="fact-val">Hip-Hop / Street Rap</div></div>
+          <div class="fact-row"><div class="fact-key">Active Since</div><div class="fact-val">MMXXIV</div></div>
+          <div class="fact-row"><div class="fact-key">Disciplines</div><div class="fact-val">Music · Photography · Fashion</div></div>
+          <div class="fact-row"><div class="fact-key">Status</div><div class="fact-val">Independent</div></div>
+          <div class="fact-row"><div class="fact-key">Latest Release</div><div class="fact-val">Artist × JHB — MMXXVI</div></div>
         </div>
       </div>
     </div>
 
-    <!--════════ NAV ════════-->
-    <nav id="nav">
-      <a href="#hero" class="nav-logo">RYXN</a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#identity">Identity</a></li>
-        <li><a href="#archive">Archive</a></li>
-        <li><a href="#vault">The Vault</a></li>
-        <li><a href="#reach">Tap In</a></li>
+  </div>
+</section>
+
+<!-- TAP IN -->
+<section id="reach">
+  <div class="reach-circ"></div>
+  <div class="reach-inner">
+    <div class="section-tag reveal">004 — Contact</div>
+    <h2 class="reach-hd reveal rd1">Tap<br><span>In.</span></h2>
+    <div class="reach-div reveal rd2"></div>
+    <div class="reach-grid reveal rd3" style="grid-template-columns:1fr">
+      <div class="rcell" style="border-right:none"><div class="rcell-lbl">Booking & All Enquiries</div><a href="mailto:book@theartist.co.za" class="rcell-val">book@theartist.co.za</a></div>
+    </div>
+    <div class="reach-bottom reveal rd4">
+      <ul class="reach-soc">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">SoundCloud</a></li>
+        <li><a href="#">Spotify</a></li>
+        <li><a href="#">Pinterest</a></li>
+        <li><a href="#">X / Twitter</a></li>
+        <li><a href="#">YouTube</a></li>
       </ul>
-      <div class="nav-burger" id="burger">
-        <span></span><span></span><span></span>
-      </div>
-    </nav>
-
-    <!--════════ HERO ════════-->
-    <section id="hero">
-      <canvas id="hc"></canvas>
-      <div class="hero-slash"></div>
-      <div class="hero-content">
-        <div class="hero-eyebrow">ZA · MMXXVI · JOHANNESBURG</div>
-        <h1 class="hero-name" data-text="RYXN">RYXN</h1>
-        <div class="hero-div"></div>
-        <div class="hero-meta">
-          <span class="on">Rapper</span>
-          <span>Creative</span>
-          <span>Photography</span>
-          <span>Street</span>
-        </div>
-      </div>
-      <div class="scroll-cue">Scroll</div>
-    </section>
-
-    <!--════════ MARQUEE ════════-->
-    <div class="mq-strip">
-      <div class="mq-inner">
-        <span class="mq-text">RYXN</span><span class="mq-sep">◆</span>
-        <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
-        <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
-        <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
-        <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
-        <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
-        <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
-        <span class="mq-text">RYXN</span><span class="mq-sep">◆</span>
-        <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
-        <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
-        <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
-        <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
-        <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
-        <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
+      <div class="reach-copy">
+        © THE ARTIST MMXXVI · Johannesburg<br>
+        Designed &amp; Built by <a href="#" target="_blank">Ambient Electron</a>
       </div>
     </div>
+  </div>
+</section>
 
-    <!--════════ IDENTITY ════════-->
-    <section id="identity">
-      <div class="id-inner">
-        <div>
-          <div class="id-num reveal">001</div>
-          <div class="id-over reveal rd1">Identity</div>
-          <h2 class="id-stmt">
-            <div class="stag-line">
-              <span class="stag-inner pword" data-speed="-0.07">Born From</span>
-            </div>
-            <div class="stag-line">
-              <span class="stag-inner pword" data-speed="0.1"
-                ><em>Concrete.</em></span
-              >
-            </div>
-            <div class="stag-line">
-              <span class="stag-inner pword" data-speed="-0.055"
-                >Forged In</span
-              >
-            </div>
-            <div class="stag-line">
-              <span class="stag-inner pword" data-speed="0.09">Motion.</span>
-            </div>
-          </h2>
-        </div>
-        <div>
-          <p class="id-bio reveal rd2">
-            RYXN is a South African rapper, photographer, and street creative
-            based in Johannesburg. His work sits at the intersection of raw
-            urban storytelling and deliberate artistic vision — where the
-            concrete speaks and silence has texture.<br /><br />
-            Drawing from the pulse of Jozi's streets, RYXN constructs worlds
-            rather than songs. Each project is a frame. Each verse, a
-            photograph. Each drop, a statement carved from the city he calls
-            home.
-          </p>
-          <div class="id-tags reveal rd3">
-            <div class="id-tag"><span>Rap</span></div>
-            <div class="id-tag"><span>Street Photography</span></div>
-            <div class="id-tag"><span>Fashion</span></div>
-            <div class="id-tag"><span>Johannesburg</span></div>
-            <div class="id-tag"><span>Multidisciplinary</span></div>
-            <div class="id-tag"><span>Independent</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="id-wm">RYXN</div>
-    </section>
-
-    <!--════════ ARCHIVE ════════-->
-    <section id="archive">
-      <div class="section-tag reveal">002 — The Archive</div>
-      <h2 class="arch-hd reveal rd1">Disco<span>g</span>raphy</h2>
-      <div class="arts-grid">
-        <!-- LATEST RELEASE — FIRST & DOMINANT -->
-        <div class="art-item featured">
-          <div class="vw">
-            <div class="vd">
-              <div class="vl r">
-                <div class="vl-t">RYXN<br />×<br />JHB</div>
-              </div>
-              <div class="vh"></div>
-            </div>
-          </div>
-          <div class="art-meta reveal rd1">
-            <div class="art-title">RYXN × JHB</div>
-            <div class="art-sub">MMXXVI · EP · 6 Tracks</div>
-            <div class="art-lbl">LATEST RELEASE</div>
-          </div>
-        </div>
-
-        <!-- MOTION TAPE -->
-        <div class="art-item">
-          <div class="cw">
-            <div class="cb">
-              <div class="csc tl"></div>
-              <div class="csc tr"></div>
-              <div class="cwin">
-                <div class="reel"></div>
-                <div class="reel"></div>
-              </div>
-              <div class="cls">
-                <span class="ct">MOTION TAPE</span>
-                <span class="cy">MMXXV</span>
-              </div>
-            </div>
-          </div>
-          <div class="art-meta reveal rd2">
-            <div class="art-title">Motion Tape</div>
-            <div class="art-sub">MMXXV · Mixtape · 12 Tracks</div>
-            <div class="art-lbl">STREET RELEASE</div>
-          </div>
-        </div>
-
-        <!-- DEBUT -->
-        <div class="art-item">
-          <div class="vw">
-            <div class="vd">
-              <div class="vl d">
-                <div class="vl-t">CONCRETE<br />EP</div>
-              </div>
-              <div class="vh"></div>
-            </div>
-          </div>
-          <div class="art-meta reveal rd3">
-            <div class="art-title">Concrete EP</div>
-            <div class="art-sub">MMXXIV · EP · 7 Tracks</div>
-            <div class="art-lbl">DEBUT PROJECT</div>
-          </div>
-        </div>
-      </div>
-      <div class="arch-bg">ARCHIVE</div>
-    </section>
-
-    <!--════════ THE VAULT ════════-->
-    <section id="vault">
-      <div class="vault-top">
-        <div class="section-tag reveal">003 — The Vault</div>
-        <h2 class="vault-hd reveal rd1">The <em>Vault</em></h2>
-      </div>
-
-      <div class="vault-tabs" id="vaultTabs">
-        <div class="v-tab on" data-tab="music">Music</div>
-        <div class="v-tab" data-tab="youtube">YouTube</div>
-        <div class="v-tab" data-tab="photos">Photos</div>
-        <div class="v-tab" data-tab="press">Press</div>
-      </div>
-
-      <div class="vault-panels">
-        <!--── MUSIC ──-->
-        <div class="v-panel on" data-tab="music">
-          <div class="music-layout">
-            <div>
-              <div class="music-art">
-                <div class="music-art-ring">
-                  <div class="music-art-dot"></div>
-                </div>
-                <div class="music-art-wm">RYXN</div>
-              </div>
-              <div class="music-rel-title">RYXN × JHB</div>
-              <div class="music-rel-meta">
-                MMXXVI · EP · 6 Tracks · Independent
-              </div>
-              <div class="stream-links">
-                <a href="#" class="slink">Spotify</a>
-                <a href="#" class="slink">Apple Music</a>
-                <a href="#" class="slink">SoundCloud</a>
-                <a href="#" class="slink">Audiomack</a>
-              </div>
-              <div class="waveform" id="waveform"></div>
-            </div>
-            <div>
-              <div class="section-tag" style="margin-bottom: 20px">
-                Latest EP — Track List
-              </div>
-              <ul class="tracklist">
-                <li class="track">
-                  <span class="trk-n">01</span
-                  ><span class="trk-name">Intro / Concrete</span
-                  ><span class="trk-feat">prod. RYXN</span
-                  ><span class="trk-dur">2:14</span>
-                </li>
-                <li class="track">
-                  <span class="trk-n">02</span
-                  ><span class="trk-name">No Signal</span
-                  ><span class="trk-feat">ft. Lamo</span
-                  ><span class="trk-dur">3:22</span>
-                </li>
-                <li class="track">
-                  <span class="trk-n">03</span
-                  ><span class="trk-name">Jozi After Dark</span
-                  ><span class="trk-feat">prod. Sketchy Bongo</span
-                  ><span class="trk-dur">3:48</span>
-                </li>
-                <li class="track">
-                  <span class="trk-n">04</span
-                  ><span class="trk-name">Motion</span
-                  ><span class="trk-feat">ft. KiD X</span
-                  ><span class="trk-dur">2:57</span>
-                </li>
-                <li class="track">
-                  <span class="trk-n">05</span
-                  ><span class="trk-name">Concrete Dreams</span
-                  ><span class="trk-feat">prod. RYXN</span
-                  ><span class="trk-dur">4:01</span>
-                </li>
-                <li class="track">
-                  <span class="trk-n">06</span
-                  ><span class="trk-name">Outro / Movement</span
-                  ><span class="trk-feat">prod. RYXN</span
-                  ><span class="trk-dur">1:58</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!--── YOUTUBE ──-->
-        <!-- ════════════════════════════════════════════════
-         VIDEO CONFIG — edit this section to update videos
-         thumb: path to your custom image (local or URL)
-         vid:   YouTube video ID (from youtube.com/watch?v=XXXX)
-    ════════════════════════════════════════════════ -->
-        <div class="v-panel" data-tab="youtube" id="ytPanel">
-          <!-- rendered by JS from VIDEOS config below -->
-        </div>
-
-        <!--── PHOTOS ──-->
-        <div class="v-panel" data-tab="photos">
-          <div class="film-scroll-wrap" id="filmScrollWrap">
-            <div class="film-outer" id="filmOuter"></div>
-          </div>
-          <div class="cs-hdr">
-            <span class="cs-roll">RYXN / ROLL 01 — JHB SERIES</span>
-            <span class="cs-date">© MMXXVI</span>
-          </div>
-          <div class="cs-body">
-            <div class="cs-margin">
-              <span class="cs-row-lbl">ROW A</span>
-              <span class="cs-row-lbl">ROW B</span>
-              <span class="cs-row-lbl">ROW C</span>
-            </div>
-            <div class="cs-grid" id="csGrid"></div>
-          </div>
-        </div>
-
-        <!--── PRESS ──-->
-        <div class="v-panel" data-tab="press">
-          <div class="press-layout">
-            <div>
-              <!-- BIO -->
-              <div class="press-bio-label">Press Bio</div>
-              <div class="press-bio-text">
-                <!-- ═══ EDIT BIO HERE ═══ Replace paragraphs below with RYXN's real bio. Add a third <p> for extra paragraph. -->
-                <p>
-                  <strong>RYXN</strong> is a Johannesburg-born rapper,
-                  photographer, and multidisciplinary street creative carving
-                  his own lane at the intersection of South African hip-hop and
-                  visual culture. Raised on the concrete rhythms of Jozi, his
-                  music is as much architecture as it is sound — each track a
-                  deliberate frame, each project a world built from the ground
-                  up.
-                </p>
-                <p>
-                  His debut <em>Concrete EP</em> announced an artist
-                  uninterested in template thinking — raw, considered,
-                  street-rooted but never confined to it. The follow-up
-                  <em>Motion Tape</em> expanded the universe, blending
-                  photography, fashion, and verse into something that resists
-                  genre. His latest EP, <em>RYXN × JHB</em>, is the most
-                  complete statement yet: six tracks that document a city, a
-                  generation, and a creative refusing to wait for permission.
-                </p>
-                <!-- Add paragraph here if needed:
-            <p>Third paragraph goes here...</p>
-            -->
-              </div>
-
-              <!-- PULL QUOTES -->
-              <div class="press-quotes">
-                <div class="press-quotes-label">Words</div>
-
-                <!-- ═══ EDIT QUOTES HERE ═══ Replace with real quotes. Add or remove .pull-quote blocks as needed. -->
-                <div class="pull-quote">
-                  <div class="pull-quote-text">
-                    One of Jozi's most deliberate young voices — he doesn't just
-                    rap, he documents.
-                  </div>
-                  <div class="pull-quote-source">
-                    Placeholder — Replace with real press quote &amp; source
-                  </div>
-                </div>
-
-                <div class="pull-quote">
-                  <div class="pull-quote-text">
-                    RYXN × JHB feels like a city talking back.
-                  </div>
-                  <div class="pull-quote-source">
-                    Placeholder — Replace with real press quote &amp; source
-                  </div>
-                </div>
-
-                <div class="pull-quote">
-                  <div class="pull-quote-text">
-                    Street photography, fashion and rap — RYXN moves between all
-                    three without losing himself in any.
-                  </div>
-                  <div class="pull-quote-source">
-                    Placeholder — Replace with real press quote &amp; source
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- SIDEBAR: FACTS + CONTACT -->
-            <div class="press-sidebar">
-              <div class="press-facts-label">Key Facts</div>
-
-              <!-- ═══ EDIT FACTS HERE ═══ -->
-              <div class="fact-row">
-                <div class="fact-key">Based In</div>
-                <div class="fact-val">Johannesburg, South Africa</div>
-              </div>
-              <div class="fact-row">
-                <div class="fact-key">Genre</div>
-                <div class="fact-val">Hip-Hop / Street Rap</div>
-              </div>
-              <div class="fact-row">
-                <div class="fact-key">Active Since</div>
-                <div class="fact-val">MMXXIV</div>
-              </div>
-              <div class="fact-row">
-                <div class="fact-key">Disciplines</div>
-                <div class="fact-val">Music · Photography · Fashion</div>
-              </div>
-              <div class="fact-row">
-                <div class="fact-key">Status</div>
-                <div class="fact-val">Independent</div>
-              </div>
-              <div class="fact-row">
-                <div class="fact-key">Latest Release</div>
-                <div class="fact-val">RYXN × JHB — MMXXVI</div>
-              </div>
-
-              <div class="press-contact">
-                <div class="press-contact-label">Press Contact</div>
-                <!-- ═══ EDIT CONTACT HERE ═══ -->
-                <div class="contact-row">
-                  <div class="contact-role">General / Booking</div>
-                  <a href="mailto:book@ryxn.co.za" class="contact-val"
-                    >book@ryxn.co.za</a
-                  >
-                </div>
-                <div class="contact-row">
-                  <div class="contact-role">Press & Media</div>
-                  <a href="mailto:press@ryxn.co.za" class="contact-val"
-                    >press@ryxn.co.za</a
-                  >
-                </div>
-                <div class="contact-row">
-                  <div class="contact-role">Collaborations</div>
-                  <a href="mailto:create@ryxn.co.za" class="contact-val"
-                    >create@ryxn.co.za</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--════════ TAP IN ════════-->
-    <section id="reach">
-      <div class="reach-circ"></div>
-      <div class="reach-inner">
-        <div class="section-tag reveal">004 — Contact</div>
-        <h2 class="reach-hd reveal rd1">Tap<br /><span>In.</span></h2>
-        <div class="reach-div reveal rd2"></div>
-        <div class="reach-grid reveal rd3">
-          <div class="rcell">
-            <div class="rcell-lbl">Booking</div>
-            <a href="mailto:book@ryxn.co.za" class="rcell-val"
-              >book@ryxn.co.za</a
-            >
-          </div>
-          <div class="rcell">
-            <div class="rcell-lbl">Press & Media</div>
-            <a href="mailto:press@ryxn.co.za" class="rcell-val"
-              >press@ryxn.co.za</a
-            >
-          </div>
-          <div class="rcell">
-            <div class="rcell-lbl">Collabs</div>
-            <a href="mailto:create@ryxn.co.za" class="rcell-val"
-              >create@ryxn.co.za</a
-            >
-          </div>
-        </div>
-        <div class="reach-bottom reveal rd4">
-          <ul class="reach-soc">
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">SoundCloud</a></li>
-            <li><a href="#">Spotify</a></li>
-            <li><a href="#">Pinterest</a></li>
-            <li><a href="#">X / Twitter</a></li>
-            <li><a href="#">YouTube</a></li>
-          </ul>
-          <div class="reach-copy">
-            © RYXN MMXXVI · Johannesburg<br />
-            Designed &amp; Built by
-            <a href="#" target="_blank">Ambient Electron</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--════════════════════════════════════════════════════
-  JAVASCRIPT
-════════════════════════════════════════════════════-->
-    <script src="./js/app.js">
-     </script>
-  </body>
+<script src="js/app.js"></script>
+</body>
 </html>
