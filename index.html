@@ -1,259 +1,4520 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>THE ARTIST — Electronic Press Kit</title>
-<link rel="stylesheet" href="./css/styles.css"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:ital,wght@0,200;0,300;0,400;0,700;0,900;1,200;1,900&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>THE ARTIST — Electronic Press Kit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:ital,wght@0,200;0,300;0,400;0,700;0,900;1,200;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      /*═══════════════════════════════════════════════════════════════════════
+  CROSS-BROWSER COMPATIBILITY
+  Covers: Chrome, Firefox, Safari, Edge, iOS Safari, Samsung Internet
+═══════════════════════════════════════════════════════════════════════*/
 
-<div id="loader"><div class="ld-name">ARTIST</div><div class="ld-track"><div class="ld-fill" id="lf"></div></div></div>
-<div id="cd"></div>
-<div id="cr"></div>
-<div id="grain"></div>
-<button id="btt" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg viewBox="0 0 14 14"><polyline points="2,10 7,4 12,10"/></svg>
-</button>
+      /* Box sizing — universal */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<!-- LIGHTBOX -->
-<div id="lightbox">
-  <div class="lb-inner">
-    <div class="lb-close" id="lb-close">[ CLOSE ]</div>
-    <div class="lb-art" id="lb-art"></div>
-    <div class="lb-caption">
-      <span class="lb-num" id="lb-num">01 / 12</span>
-      <span class="lb-photo-caption" id="lb-caption-text"></span>
-      <div class="lb-arrows">
-        <span class="lb-arrow" id="lb-prev">← PREV</span>
-        <span class="lb-arrow" id="lb-next">NEXT →</span>
-      </div>
+      /* Smooth scroll — with reduced-motion fallback */
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Tap highlight removal — iOS/Android */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Font smoothing — macOS Safari & Chrome */
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Inset — Safari <14 fallback */
+      @supports not (inset: 0) {
+        #loader,
+        #grain,
+        #cd,
+        #cr,
+        #hero,
+        #hc,
+        .hero-bg-img,
+        .hero-bg-fade,
+        .hero-slash,
+        .perf-feat,
+        .perf-feat-thumb,
+        .perf-feat-fallback,
+        .perf-feat-vignette,
+        .perf-feat-info,
+        .perf-embed,
+        .yt-embed,
+        .yt-card-embed,
+        .sf-art,
+        .sgf-art,
+        .sf-caption,
+        .sgf-caption,
+        .id-bg-img,
+        .id-bg-fade,
+        .arch-bg-img,
+        .arch-bg-mask,
+        .arch-bg-mask::after,
+        .csf-art,
+        .lb-art,
+        .lb-fallback,
+        .vd::after,
+        .id-tag::before,
+        .pull-quote::before,
+        .perf-item-play,
+        .yt-card-play,
+        .yt-feat-overlay,
+        .yt-vignette,
+        .perf-vignette {
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+        }
+      }
+
+      /* Aspect-ratio — Safari <15 fallback using padding-top trick */
+      @supports not (aspect-ratio: 16/9) {
+        .yt-feat-thumb::before,
+        .yt-card-thumb::before,
+        .perf-feat-sizer {
+          content: "";
+          display: block;
+          padding-top: 56.25%;
+        }
+        .yt-feat-thumb,
+        .yt-card-thumb {
+          position: relative;
+        }
+        .music-art::before {
+          padding-top: 100%;
+        }
+      }
+
+      /* Gap in flex/grid — older Safari fallback */
+      @supports not (gap: 1px) {
+        .id-tags > * {
+          margin: 4px;
+        }
+        .stream-links > * {
+          margin: 4px;
+        }
+        .reach-soc > li {
+          margin-right: 22px;
+        }
+        .nav-links > li {
+          margin-left: 32px;
+        }
+        .hero-meta > span {
+          margin-right: 32px;
+        }
+        .arts-grid > * {
+          margin: 18px;
+        }
+        .vault-tabs > .v-tab {
+          margin-right: 4px;
+        }
+      }
+
+      /* Clip-path — graceful degradation for older browsers */
+      @supports not (clip-path: inset(0)) {
+        .hero-name::before,
+        .hero-name::after {
+          display: none;
+        }
+      }
+
+      /* Backdrop-filter — Firefox fallback */
+      @supports not (backdrop-filter: blur(1px)) {
+        nav.scrolled {
+          background: rgba(7, 7, 7, 0.97);
+        }
+      }
+      /* WebKit prefix for Safari */
+      nav.scrolled {
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+      }
+
+      /* Mix-blend-mode — IE/older Edge fallback */
+      @supports not (mix-blend-mode: screen) {
+        .hero-name::after {
+          display: none;
+        }
+      }
+
+      /* Object-fit — for older browsers */
+      @supports not (object-fit: cover) {
+        .hero-bg-img,
+        .id-bg-img,
+        .arch-bg-img,
+        .perf-feat-img,
+        .perf-item-img,
+        .yt-thumb-img,
+        .yt-card-img,
+        .sf-img,
+        .sgf-img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      /* Will-change — performance hint, ignored where unsupported */
+      .hero-bg-img,
+      .id-bg-img,
+      .arch-bg-img {
+        will-change: transform;
+      }
+      .pword {
+        will-change: transform;
+      }
+
+      /* CSS custom properties — fallback values for IE11 */
+      body {
+        background: #070707;
+        background: var(--void);
+        color: #e8e4dc;
+        color: var(--bone);
+        font-family: "Space Mono", monospace;
+        font-family: var(--ff-m);
+      }
+
+      /* Touch action — prevent double-tap zoom on interactive elements */
+      a,
+      button,
+      .v-tab,
+      .art-item,
+      .id-tag,
+      .sf,
+      .sgf,
+      .csf,
+      .perf-item,
+      .yt-card,
+      .pull-quote {
+        touch-action: manipulation;
+      }
+
+      /* Overflow anchor — prevent scroll jump on content load */
+      html {
+        overflow-anchor: none;
+      }
+
+      /* Selection — WebKit prefix */
+      ::-webkit-selection {
+        background: var(--blood);
+        color: var(--bone);
+      }
+      ::-moz-selection {
+        background: var(--blood);
+        color: var(--bone);
+      }
+      ::selection {
+        background: var(--blood);
+        color: var(--bone);
+      }
+
+      /* Scrollbar — cross-browser */
+      ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--void);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--blood);
+      }
+      /* Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--blood) var(--void);
+      }
+
+      /* Input/button resets for Safari */
+      button {
+        -webkit-appearance: none;
+        appearance: none;
+        border: none;
+        background: none;
+        cursor: none;
+      }
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Iframe borders — all browsers */
+      iframe {
+        border: none;
+        border: 0;
+      }
+
+      /* Animation — WebKit prefix for older Safari */
+      @-webkit-keyframes ldPulse {
+        from {
+          opacity: 0.1;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes grainS {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(-3px, 2px);
+        }
+        50% {
+          transform: translate(2px, -3px);
+        }
+        75% {
+          transform: translate(-2px, 3px);
+        }
+      }
+      @-webkit-keyframes sprayFade {
+        0% {
+          opacity: 0.9;
+          -webkit-transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: scale(0.1);
+        }
+      }
+      @-webkit-keyframes fadeUp {
+        from {
+          opacity: 0;
+          -webkit-transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          -webkit-transform: translateY(0);
+        }
+      }
+      @-webkit-keyframes hNameIn {
+        from {
+          opacity: 0;
+          -webkit-transform: translateY(60px) skewY(2deg);
+        }
+        to {
+          opacity: 1;
+          -webkit-transform: translateY(0) skewY(0);
+        }
+      }
+      @-webkit-keyframes mqScroll {
+        from {
+          -webkit-transform: translateX(0);
+        }
+        to {
+          -webkit-transform: translateX(-50%);
+        }
+      }
+      @-webkit-keyframes playPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(200, 0, 10, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 14px rgba(200, 0, 10, 0);
+        }
+      }
+      @-webkit-keyframes vinylSpin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes reelSpin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes lineUp {
+        from {
+          -webkit-transform: translateY(110%);
+        }
+        to {
+          -webkit-transform: translateY(0);
+        }
+      }
+      @-webkit-keyframes panIn {
+        from {
+          opacity: 0;
+          -webkit-transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          -webkit-transform: translateY(0);
+        }
+      }
+      @-webkit-keyframes slashR {
+        to {
+          -webkit-transform: scaleX(1);
+        }
+      }
+
+      /* Transform — WebKit prefix for older Safari */
+      .pword,
+      .stag-inner,
+      .hero-bg-img,
+      .id-bg-img,
+      .arch-bg-img,
+      .vw,
+      .sf,
+      .sgf,
+      .csf,
+      .mb-item,
+      .perf-feat-img,
+      .yt-thumb-img,
+      .yt-card-img {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+
+      /* Flex — WebKit prefix for older Safari */
+      .nav-links,
+      .hero-meta,
+      .id-tags,
+      .stream-links,
+      .reach-soc,
+      .waveform,
+      .vault-tabs,
+      .mq-inner,
+      .lb-arrows,
+      .lb-caption-row,
+      .cs-body,
+      .sprocket-rail,
+      .strip-row {
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      /* Grid — IE graceful degradation */
+      @supports not (display: grid) {
+        .id-inner,
+        .press-layout,
+        .arts-grid,
+        .yt-grid,
+        .street-grid,
+        .cs-grid,
+        .reach-grid,
+        .mb-grid {
+          display: -webkit-flex;
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .id-inner > *,
+        .press-layout > * {
+          -webkit-flex: 1 1 300px;
+          flex: 1 1 300px;
+        }
+        .arts-grid > *,
+        .yt-grid > * {
+          -webkit-flex: 1 1 200px;
+          flex: 1 1 200px;
+          margin: 18px;
+        }
+        .street-grid > *,
+        .cs-grid > * {
+          -webkit-flex: 1 1 140px;
+          flex: 1 1 140px;
+          margin: 3px;
+        }
+      }
+
+      /* Font display — ensures text visible during font load */
+      /* (handled via Google Fonts &display=swap in the link tag) */
+
+      /* Overscroll behaviour — prevent pull-to-refresh interfering */
+      body {
+        overscroll-behavior-y: none;
+      }
+      .film-scroll-wrap,
+      .perf-queue {
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /*═══════════════════════════════════════════════════════════════════════
+  END COMPATIBILITY — main styles follow
+═══════════════════════════════════════════════════════════════════════*/
+
+      /*═══════════════════════════════ ROOT ════════════════════════════════*/
+      :root {
+        --void: #070707;
+        --ash: #111111;
+        --coal: #181818;
+        --blood: #c8000a;
+        --ember: #ff2828;
+        --bone: #e8e4dc;
+        --bone50: rgba(232, 228, 220, 0.5);
+        --bone15: rgba(232, 228, 220, 0.1);
+        --ff-d: "Anton", sans-serif;
+        --ff-c: "Barlow Condensed", sans-serif;
+        --ff-m: "Space Mono", monospace;
+      }
+      ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--void);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--blood);
+      }
+      ::selection {
+        background: var(--blood);
+        color: var(--bone);
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--void);
+        color: var(--bone);
+        font-family: var(--ff-m);
+        cursor: none;
+        overflow-x: hidden;
+      }
+
+      /*═══════════════════════════════ LOADER ══════════════════════════════*/
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: var(--void);
+        z-index: 100000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        transition:
+          opacity 0.9s,
+          visibility 0.9s;
+      }
+      #loader.gone {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .ld-name {
+        font-family: var(--ff-d);
+        font-size: 4.5rem;
+        letter-spacing: 0.4em;
+        color: var(--bone);
+        animation: ldPulse 0.9s ease-in-out infinite alternate;
+      }
+      @keyframes ldPulse {
+        from {
+          opacity: 0.1;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .ld-track {
+        width: 130px;
+        height: 1px;
+        background: rgba(232, 228, 220, 0.07);
+      }
+      .ld-fill {
+        height: 100%;
+        background: var(--blood);
+        width: 0;
+        transition: width 0.08s linear;
+      }
+
+      /*═══════════════════════════════ CURSOR ══════════════════════════════*/
+      #cd {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--ember);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99999;
+        transform: translate(-50%, -50%);
+        transition:
+          transform 0.15s,
+          width 0.2s,
+          height 0.2s;
+        will-change: left, top, transform;
+      }
+      #cr {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(200, 0, 10, 0.55);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99998;
+        transform: translate(-50%, -50%);
+        will-change: left, top;
+      }
+      .spray {
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99990;
+        animation: sprayFade 0.65s ease-out forwards;
+      }
+      @keyframes sprayFade {
+        0% {
+          opacity: 0.9;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.1);
+        }
+      }
+
+      /*═══════════════════════════════ GRAIN ═══════════════════════════════*/
+      #grain {
+        position: fixed;
+        inset: 0;
+        z-index: 9998;
+        pointer-events: none;
+        opacity: 0.036;
+        background-size: 256px 256px;
+        animation: grainS 0.18s steps(1) infinite;
+      }
+      @keyframes grainS {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(-3px, 2px);
+        }
+        50% {
+          transform: translate(2px, -3px);
+        }
+        75% {
+          transform: translate(-2px, 3px);
+        }
+      }
+
+      /*═══════════════════════════════ BACK TO TOP ═════════════════════════*/
+      #btt {
+        position: fixed;
+        bottom: 32px;
+        left: 32px;
+        z-index: 9000;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba(200, 0, 10, 0.35);
+        background: rgba(7, 7, 7, 0.88);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity 0.35s,
+          transform 0.35s,
+          background 0.25s,
+          border-color 0.25s;
+        pointer-events: none;
+      }
+      #btt.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      #btt:hover {
+        background: var(--blood);
+        border-color: var(--blood);
+      }
+      #btt svg {
+        width: 14px;
+        height: 14px;
+        stroke: var(--bone);
+        stroke-width: 1.5;
+        fill: none;
+      }
+
+      /*═══════════════════════════════ NAV ═════════════════════════════════*/
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 52px;
+        transition:
+          background 0.4s,
+          backdrop-filter 0.4s,
+          border-color 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(7, 7, 7, 0.92);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(232, 228, 220, 0.04);
+      }
+      .nav-logo {
+        font-family: var(--ff-d);
+        font-size: 1.35rem;
+        letter-spacing: 0.18em;
+        color: var(--bone);
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-family: var(--ff-m);
+        font-size: 0.56rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.4);
+        text-decoration: none;
+        transition: color 0.25s;
+      }
+      .nav-links a::before {
+        content: "//";
+        color: var(--blood);
+        margin-right: 4px;
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--bone);
+      }
+      .nav-links a:hover::before {
+        opacity: 1;
+      }
+      .nav-burger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: none;
+        position: relative;
+        z-index: 1002;
+      }
+      .nav-burger span {
+        display: block;
+        width: 22px;
+        height: 1px;
+        background: var(--bone);
+        transition: all 0.3s;
+      }
+
+      /*═══════════════════════════════ REVEALS ════════════════════════════*/
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.vis {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .rd1 {
+        transition-delay: 0.1s;
+      }
+      .rd2 {
+        transition-delay: 0.22s;
+      }
+      .rd3 {
+        transition-delay: 0.36s;
+      }
+      .rd4 {
+        transition-delay: 0.52s;
+      }
+      .pword {
+        display: inline-block;
+        will-change: transform;
+      }
+      .stag-line {
+        overflow: hidden;
+      }
+      .stag-inner {
+        display: inline-block;
+      }
+      .stag-inner.in {
+        animation: lineUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes lineUp {
+        from {
+          transform: translateY(110%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      .section-tag {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--blood);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 32px;
+      }
+      .section-tag::before {
+        content: "";
+        display: block;
+        width: 34px;
+        height: 1px;
+        background: var(--blood);
+      }
+
+      /*═══════════════════════════════ HERO ════════════════════════════════*/
+      #hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 72px;
+      }
+      /* Hero background photo */
+      .hero-bg-img {
+        position: absolute;
+        inset: -5%;
+        width: 110%;
+        height: 110%;
+        object-fit: cover;
+        object-position: center top;
+        will-change: transform;
+        z-index: 0;
+      }
+      .hero-bg-fade {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            to top,
+            rgba(7, 7, 7, 1) 0%,
+            rgba(7, 7, 7, 0.8) 35%,
+            rgba(7, 7, 7, 0.3) 65%,
+            rgba(7, 7, 7, 0.6) 100%
+          ),
+          linear-gradient(
+            to right,
+            rgba(7, 7, 7, 0.7) 0%,
+            transparent 25%,
+            transparent 75%,
+            rgba(7, 7, 7, 0.7) 100%
+          );
+      }
+      .hero-bg-fade::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 80% 100% at 60% 0%,
+          rgba(200, 0, 10, 0.07) 0%,
+          transparent 60%
+        );
+      }
+      #hc {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 4;
+        padding: 0 52px;
+      }
+      .hero-slash {
+        position: absolute;
+        top: 43%;
+        right: 0;
+        width: 25vw;
+        height: 2px;
+        background: var(--blood);
+        opacity: 0.45;
+        transform-origin: right;
+        z-index: 3;
+        animation: slashR 1.5s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transform: scaleX(0);
+      }
+      .scroll-cue {
+        position: absolute;
+        bottom: 30px;
+        right: 52px;
+        z-index: 4;
+        opacity: 0;
+        animation: fadeUp 0.8s 1.7s ease forwards;
+      }
+      .hero-eyebrow {
+        font-family: var(--ff-m);
+        font-size: 0.57rem;
+        letter-spacing: 0.44em;
+        color: rgba(232, 228, 220, 0.4);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        opacity: 0;
+        animation: fadeUp 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .hero-name {
+        font-family: var(--ff-d);
+        font-size: clamp(7rem, 20vw, 18rem);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        color: var(--bone);
+        position: relative;
+        display: inline-block;
+        opacity: 0;
+        animation: hNameIn 1.3s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* ── AGGRESSIVE GLITCH ── */
+      .hero-name::before,
+      .hero-name::after,
+      .hero-name .gl-r,
+      .hero-name .gl-b {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-family: var(--ff-d);
+        font-size: inherit;
+        line-height: inherit;
+        pointer-events: none;
+      }
+      /* Red channel */
+      .hero-name::before {
+        color: var(--blood);
+        animation: glRed 4s 1.5s infinite;
+        clip-path: inset(0 0 100% 0);
+        mix-blend-mode: screen;
+      }
+      /* Bone offset */
+      .hero-name::after {
+        color: rgba(232, 228, 220, 0.7);
+        animation: glBone 4s 1.5s infinite;
+        clip-path: inset(100% 0 0 0);
+      }
+      @keyframes glRed {
+        0%,
+        74%,
+        100% {
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+          opacity: 1;
+        }
+        75% {
+          clip-path: inset(8% 0 65% 0);
+          transform: translate(-8px, 3px) skewX(-4deg);
+          opacity: 0.9;
+        }
+        76% {
+          clip-path: inset(45% 0 30% 0);
+          transform: translate(10px, -4px) skewX(3deg);
+          opacity: 1;
+        }
+        77% {
+          clip-path: inset(70% 0 8% 0);
+          transform: translate(-6px, 2px);
+          opacity: 0.85;
+        }
+        78% {
+          clip-path: inset(20% 0 55% 0);
+          transform: translate(8px, -3px) skewX(-2deg);
+        }
+        79% {
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+        }
+        82% {
+          clip-path: inset(55% 0 20% 0);
+          transform: translate(-10px, 5px) skewX(5deg);
+          opacity: 0.9;
+        }
+        83% {
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+        }
+        88% {
+          clip-path: inset(3% 0 80% 0);
+          transform: translate(6px, -2px);
+        }
+        89% {
+          clip-path: inset(80% 0 3% 0);
+          transform: translate(-6px, 2px) skewX(-3deg);
+        }
+        90% {
+          clip-path: inset(0 0 100% 0);
+          transform: translate(0);
+        }
+      }
+      @keyframes glBone {
+        0%,
+        74%,
+        100% {
+          clip-path: inset(100% 0 0 0);
+          transform: translate(0);
+        }
+        75% {
+          clip-path: inset(65% 0 8% 0);
+          transform: translate(8px, -3px) skewX(4deg);
+        }
+        76% {
+          clip-path: inset(30% 0 45% 0);
+          transform: translate(-10px, 4px) skewX(-3deg);
+        }
+        77% {
+          clip-path: inset(8% 0 70% 0);
+          transform: translate(6px, -2px);
+        }
+        78% {
+          clip-path: inset(55% 0 20% 0);
+          transform: translate(-8px, 3px) skewX(2deg);
+        }
+        79% {
+          clip-path: inset(100% 0 0 0);
+          transform: translate(0);
+        }
+        82% {
+          clip-path: inset(20% 0 55% 0);
+          transform: translate(10px, -5px) skewX(-5deg);
+        }
+        83% {
+          clip-path: inset(100% 0 0 0);
+          transform: translate(0);
+        }
+        88% {
+          clip-path: inset(80% 0 3% 0);
+          transform: translate(-6px, 2px);
+        }
+        89% {
+          clip-path: inset(3% 0 80% 0);
+          transform: translate(6px, -2px) skewX(3deg);
+        }
+        90% {
+          clip-path: inset(100% 0 0 0);
+          transform: translate(0);
+        }
+      }
+      /* Horizontal scan-line glitch burst */
+      .hero-name {
+        filter: none;
+        animation:
+          hNameIn 1.3s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+          glScan 4s 1.5s infinite;
+      }
+      @keyframes glScan {
+        0%,
+        74%,
+        100% {
+          filter: none;
+        }
+        75% {
+          filter: brightness(1.4) contrast(1.2);
+        }
+        76% {
+          filter: hue-rotate(180deg) brightness(1.1);
+        }
+        77% {
+          filter: none;
+        }
+        82% {
+          filter: brightness(1.3) saturate(2);
+        }
+        83% {
+          filter: none;
+        }
+        88% {
+          filter: contrast(1.5) brightness(0.8);
+        }
+        89% {
+          filter: none;
+        }
+      }
+      @keyframes hNameIn {
+        from {
+          opacity: 0;
+          transform: translateY(60px) skewY(2deg);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) skewY(0);
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-div {
+        width: 440px;
+        max-width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, var(--blood), transparent);
+        margin: 20px 0;
+        opacity: 0;
+        animation: fadeUp 0.8s 1s ease forwards;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.8s 1.2s ease forwards;
+      }
+      .hero-meta span {
+        font-family: var(--ff-c);
+        font-size: 0.8rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.35);
+        font-weight: 300;
+        transition: color 0.4s;
+      }
+      .hero-meta span.on {
+        color: var(--bone);
+        font-weight: 700;
+      }
+      @keyframes slashR {
+        to {
+          transform: scaleX(1);
+        }
+      }
+      /* Scroll cue — line only */
+      .scroll-cue::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 52px;
+        background: linear-gradient(to bottom, var(--blood), transparent);
+        animation: lineBr 2s ease-in-out infinite;
+      }
+      @keyframes lineBr {
+        0%,
+        100% {
+          opacity: 0.35;
+          height: 52px;
+        }
+        50% {
+          opacity: 1;
+          height: 70px;
+        }
+      }
+
+      /*═══════════════════════════════ MARQUEE ════════════════════════════*/
+      .mq-strip {
+        background: var(--blood);
+        padding: 11px 0;
+        overflow: hidden;
+      }
+      .mq-inner {
+        display: flex;
+        width: max-content;
+        animation: mqScroll 22s linear infinite;
+      }
+      .mq-text {
+        font-family: var(--ff-c);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--bone);
+        padding-right: 52px;
+        white-space: nowrap;
+      }
+      .mq-sep {
+        color: rgba(232, 228, 220, 0.35);
+        margin-right: 52px;
+      }
+      @keyframes mqScroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /*═══════════════════════════════ IDENTITY ════════════════════════════*/
+      #identity {
+        position: relative;
+        background: var(--void);
+        padding: 110px 52px;
+        overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      /* Parallax bg image — full cover, all edges faded */
+      .id-bg-img {
+        position: absolute;
+        inset: -10%;
+        width: 120%;
+        height: 120%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.13;
+        filter: grayscale(1) contrast(1.1);
+        will-change: transform;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .id-bg-fade {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            to right,
+            rgba(7, 7, 7, 1) 0%,
+            rgba(7, 7, 7, 0.9) 30%,
+            rgba(7, 7, 7, 0.5) 55%,
+            rgba(7, 7, 7, 0.9) 78%,
+            rgba(7, 7, 7, 1) 100%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(7, 7, 7, 1) 0%,
+            rgba(7, 7, 7, 0.2) 15%,
+            rgba(7, 7, 7, 0.2) 85%,
+            rgba(7, 7, 7, 1) 100%
+          );
+      }
+      .id-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+        max-width: 1400px;
+        width: 100%;
+        position: relative;
+        z-index: 3;
+      }
+      .id-num {
+        font-family: var(--ff-c);
+        font-size: 0.57rem;
+        letter-spacing: 0.32em;
+        color: rgba(200, 0, 10, 0.3);
+        font-weight: 300;
+        margin-bottom: 8px;
+      }
+      .id-over {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.36em;
+        color: var(--blood);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .id-over::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--blood);
+        display: block;
+      }
+      .id-stmt {
+        font-family: var(--ff-c);
+        font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+        font-weight: 900;
+        line-height: 0.96;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: var(--bone);
+      }
+      .id-stmt em {
+        font-style: italic;
+        color: var(--blood);
+      }
+      .id-bio {
+        font-family: var(--ff-m);
+        font-size: 0.72rem;
+        line-height: 2;
+        color: rgba(232, 228, 220, 0.48);
+        margin-bottom: 34px;
+      }
+      .id-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+      .id-tag {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 8px 15px;
+        border: 1px solid rgba(200, 0, 10, 0.28);
+        color: var(--blood);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        cursor: none;
+      }
+      .id-tag::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--blood);
+        transform: translateX(-101%);
+        transition: transform 0.3s ease;
+      }
+      .id-tag:hover {
+        color: var(--bone);
+      }
+      .id-tag:hover::before {
+        transform: translateX(0);
+      }
+      .id-tag span {
+        position: relative;
+        z-index: 1;
+      }
+      .id-wm {
+        position: absolute;
+        right: -50px;
+        bottom: -80px;
+        font-family: var(--ff-d);
+        font-size: clamp(7rem, 16vw, 14rem);
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(200, 0, 10, 0.045);
+        pointer-events: none;
+        user-select: none;
+        line-height: 1;
+        z-index: 0;
+      }
+
+      /*═══════════════════════════════ ARCHIVE ════════════════════════════*/
+      #archive {
+        background: var(--ash);
+        padding: 110px 52px;
+        overflow: hidden;
+        position: relative;
+      }
+      /* Archive background photo — all edges faded, no exposed edges */
+      .arch-bg-img {
+        position: absolute;
+        inset: -10%;
+        width: 120%;
+        height: 120%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.16;
+        filter: grayscale(1) contrast(1.1) brightness(0.85);
+        pointer-events: none;
+        z-index: 0;
+        will-change: transform;
+      }
+      .arch-bg-mask {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            to right,
+            rgba(17, 17, 17, 1) 0%,
+            rgba(17, 17, 17, 0.85) 25%,
+            rgba(17, 17, 17, 0.45) 50%,
+            rgba(17, 17, 17, 0.85) 75%,
+            rgba(17, 17, 17, 1) 100%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(17, 17, 17, 1) 0%,
+            rgba(17, 17, 17, 0.2) 18%,
+            rgba(17, 17, 17, 0.2) 82%,
+            rgba(17, 17, 17, 1) 100%
+          );
+      }
+      /* Red bleed from bottom left */
+      .arch-bg-mask::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 60% 50% at 10% 90%,
+          rgba(200, 0, 10, 0.07) 0%,
+          transparent 70%
+        );
+      }
+      .arch-hd {
+        font-family: var(--ff-d);
+        font-size: clamp(2.8rem, 7vw, 6rem);
+        letter-spacing: -0.02em;
+        color: var(--bone);
+        line-height: 1;
+        margin-bottom: 64px;
+      }
+      .arch-hd span {
+        color: var(--blood);
+      }
+      .arts-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px;
+        align-items: start;
+        perspective: 1200px;
+      }
+      .art-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        cursor: none;
+      }
+      .art-item.featured .vw {
+        width: clamp(190px, 24vw, 280px);
+        height: clamp(190px, 24vw, 280px);
+      }
+      .art-item.featured .vd {
+        box-shadow:
+          0 28px 80px rgba(0, 0, 0, 0.9),
+          0 0 60px rgba(200, 0, 10, 0.18);
+      }
+      .art-item.featured .art-title {
+        font-size: 1.2rem;
+      }
+      .art-item.featured .art-lbl {
+        color: var(--ember);
+        letter-spacing: 0.18em;
+      }
+      .art-item.featured::before {
+        content: "LATEST";
+        font-family: var(--ff-m);
+        font-size: 0.44rem;
+        letter-spacing: 0.36em;
+        color: var(--blood);
+        border: 1px solid rgba(200, 0, 10, 0.3);
+        padding: 5px 12px;
+        margin-bottom: -8px;
+      }
+      .vw {
+        position: relative;
+        width: clamp(150px, 18vw, 220px);
+        height: clamp(150px, 18vw, 220px);
+        animation: floatA 6s ease-in-out infinite;
+      }
+      .art-item:nth-child(2) .cw {
+        animation: floatB 7s ease-in-out 0.8s infinite;
+      }
+      .art-item:nth-child(3) .vw {
+        animation: floatA 5.5s ease-in-out 1.6s infinite;
+      }
+      @keyframes floatA {
+        0%,
+        100% {
+          transform: translateY(0) rotateY(0);
+        }
+        50% {
+          transform: translateY(-14px) rotateY(4deg);
+        }
+      }
+      @keyframes floatB {
+        0%,
+        100% {
+          transform: translateY(0) rotateX(2deg);
+        }
+        50% {
+          transform: translateY(-18px) rotateX(-2deg);
+        }
+      }
+      .vd {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 50% 50%,
+          #222 0%,
+          #222 15%,
+          transparent 15.1%,
+          transparent 16%,
+          #0a0a0a 16%,
+          #0a0a0a 16.5%,
+          #1c1c1c 16.5%,
+          #1c1c1c 21%,
+          #0a0a0a 21%,
+          #0a0a0a 21.5%,
+          #1c1c1c 21.5%,
+          #1c1c1c 26%,
+          #0a0a0a 26%,
+          #0a0a0a 26.5%,
+          #1c1c1c 26.5%,
+          #1c1c1c 32%,
+          #0a0a0a 32%,
+          #0a0a0a 32.5%,
+          #1c1c1c 32.5%,
+          #1c1c1c 38%,
+          #0a0a0a 38%,
+          #0a0a0a 38.5%,
+          #1c1c1c 38.5%,
+          #1c1c1c 46%,
+          #0a0a0a 46%,
+          #0a0a0a 46.5%,
+          #1c1c1c 46.5%,
+          #1c1c1c 56%,
+          #0a0a0a 56%,
+          #0a0a0a 56.5%,
+          #1c1c1c 56.5%,
+          #1c1c1c 68%,
+          #090909 68%,
+          #090909 100%
+        );
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        transition: box-shadow 0.4s;
+      }
+      .vw:hover .vd {
+        box-shadow:
+          0 28px 80px rgba(0, 0, 0, 0.9),
+          0 0 50px rgba(200, 0, 10, 0.12);
+        animation: vinylSpin 3s linear infinite;
+      }
+      @keyframes vinylSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .vd::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 0deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.03) 10%,
+          transparent 20%,
+          rgba(255, 255, 255, 0.02) 35%,
+          transparent 45%
+        );
+        pointer-events: none;
+      }
+      .vl {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30%;
+        height: 30%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+      .vl.r {
+        background: radial-gradient(circle, #cc0000, #880000);
+      }
+      .vl.d {
+        background: radial-gradient(circle, #1f1f1f, #080808);
+        border: 1px solid rgba(200, 0, 10, 0.32);
+      }
+      .vl-t {
+        font-family: var(--ff-d);
+        font-size: 0.25rem;
+        letter-spacing: 0.08em;
+        text-align: center;
+        line-height: 1.4;
+      }
+      .vl.r .vl-t {
+        color: var(--bone);
+      }
+      .vl.d .vl-t {
+        color: var(--blood);
+      }
+      .vh {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 4.5%;
+        height: 4.5%;
+        border-radius: 50%;
+        background: var(--ash);
+        z-index: 3;
+      }
+      .cw {
+        position: relative;
+        width: clamp(150px, 18vw, 220px);
+        height: clamp(108px, 13vw, 158px);
+        animation: floatB 6.5s ease-in-out 0.4s infinite;
+      }
+      .cb {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+        border-radius: 8px;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        transition: box-shadow 0.4s;
+        overflow: hidden;
+      }
+      .cw:hover .cb {
+        box-shadow:
+          0 28px 80px rgba(0, 0, 0, 0.9),
+          0 0 40px rgba(200, 0, 10, 0.1);
+      }
+      .cwin {
+        position: absolute;
+        top: 22%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 46%;
+        background: #040404;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 14%;
+      }
+      .reel {
+        width: 30%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: conic-gradient(
+          #222 0%,
+          #444 25%,
+          #222 50%,
+          #444 75%,
+          #222 100%
+        );
+        position: relative;
+      }
+      .cw:hover .reel {
+        animation: reelSpin 1.4s linear infinite;
+      }
+      @keyframes reelSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .reel::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30%;
+        height: 30%;
+        border-radius: 50%;
+        background: #080808;
+      }
+      .cls {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 28%;
+        background: var(--blood);
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+      }
+      .cls .ct {
+        font-family: var(--ff-d);
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        color: var(--bone);
+      }
+      .cls .cy {
+        font-family: var(--ff-m);
+        font-size: 0.4rem;
+        color: rgba(232, 228, 220, 0.6);
+        margin-left: auto;
+      }
+      .csc {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #080808;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .csc.tl {
+        top: 7px;
+        left: 8px;
+      }
+      .csc.tr {
+        top: 7px;
+        right: 8px;
+      }
+      .art-meta {
+        text-align: center;
+      }
+      .art-title {
+        font-family: var(--ff-c);
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--bone);
+        margin-bottom: 4px;
+      }
+      .art-sub {
+        font-family: var(--ff-m);
+        font-size: 0.5rem;
+        letter-spacing: 0.2em;
+        color: rgba(232, 228, 220, 0.4);
+        text-transform: uppercase;
+      }
+      .art-lbl {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        color: var(--blood);
+        margin-top: 6px;
+        letter-spacing: 0.1em;
+      }
+      .arch-bg {
+        position: absolute;
+        right: 28px;
+        top: 50%;
+        transform: translateY(-50%) rotate(90deg);
+        font-family: var(--ff-d);
+        font-size: 9rem;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(200, 0, 10, 0.04);
+        pointer-events: none;
+        user-select: none;
+        white-space: nowrap;
+      }
+
+      /*═══════════════════════════════ VAULT ══════════════════════════════*/
+      #vault {
+        background: var(--void);
+        min-height: 100vh;
+        padding: 100px 0 0;
+        overflow: hidden;
+      }
+      .vault-top {
+        padding: 0 52px;
+      }
+      .vault-hd {
+        font-family: var(--ff-d);
+        font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+        letter-spacing: -0.02em;
+        color: var(--bone);
+        line-height: 1;
+        margin-bottom: 48px;
+      }
+      .vault-hd em {
+        font-style: normal;
+        color: var(--blood);
+      }
+      .vault-tabs {
+        display: flex;
+        align-items: flex-end;
+        border-bottom: 1px solid rgba(232, 228, 220, 0.07);
+        padding: 0 52px;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .vault-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .v-tab {
+        font-family: var(--ff-m);
+        font-size: 0.58rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.3);
+        padding: 14px 26px;
+        cursor: none;
+        transition: color 0.25s;
+        white-space: nowrap;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        user-select: none;
+      }
+      .v-tab:hover {
+        color: rgba(232, 228, 220, 0.65);
+      }
+      .v-tab.on {
+        color: var(--bone);
+        border-bottom-color: var(--blood);
+      }
+      .v-panel {
+        display: none;
+        padding: 52px 52px 80px;
+        min-height: 68vh;
+        animation: panIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .v-panel.on {
+        display: block;
+      }
+      @keyframes panIn {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /*─────── PERFORMANCES (Music) ───────*/
+      .perf-layout {
+        display: flex;
+        flex-direction: row;
+        min-height: 520px;
+        border: 1px solid rgba(232, 228, 220, 0.055);
+      }
+      /* Featured — wrapper enforces aspect ratio via padding trick */
+      .perf-feat-wrap {
+        flex: 1;
+        position: relative;
+        min-width: 0;
+        background: var(--void);
+      }
+      .perf-feat-sizer {
+        padding-top: 56.25%;
+        position: relative;
+        width: 100%;
+      } /* 16:9 */
+      .perf-feat {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        cursor: none;
+      }
+      .perf-feat-thumb {
+        position: absolute;
+        inset: 0;
+      }
+      .perf-feat-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.65;
+        transition:
+          opacity 0.4s,
+          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .perf-feat:hover .perf-feat-img {
+        opacity: 0.82;
+        transform: scale(1.03);
+      }
+      .perf-feat-fallback {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #110000, #2a0000 60%, #0d0000);
+      }
+      .perf-feat-fallback::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 12px,
+          rgba(200, 0, 10, 0.04) 12px,
+          rgba(200, 0, 10, 0.04) 24px
+        );
+      }
+      /* Vignette edges */
+      .perf-feat-vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 40%,
+          rgba(7, 7, 7, 0.7) 100%
+        );
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+      .perf-feat:hover .perf-feat-vignette {
+        opacity: 0.5;
+      }
+      /* Play button */
+      .perf-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 0, 10, 0.5);
+        background: rgba(200, 0, 10, 0.12);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        animation: playPulse 2.5s ease-in-out infinite;
+      }
+      .perf-feat:hover .perf-play {
+        background: rgba(200, 0, 10, 0.85);
+        border-color: var(--blood);
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 0 40px rgba(200, 0, 10, 0.35);
+        animation: none;
+      }
+      @keyframes playPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(200, 0, 10, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 14px rgba(200, 0, 10, 0);
+        }
+      }
+      .perf-play::after {
+        content: "";
+        border-style: solid;
+        border-width: 12px 0 12px 22px;
+        border-color: transparent transparent transparent var(--bone);
+        margin-left: 6px;
+        transition: border-color 0.3s;
+      }
+      .perf-feat:hover .perf-play::after {
+        border-left-color: #fff;
+      }
+      /* Feat info */
+      .perf-feat-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 28px;
+        background: linear-gradient(
+          to top,
+          rgba(7, 7, 7, 0.95) 0%,
+          transparent 100%
+        );
+        z-index: 2;
+        transform: translateY(8px);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .perf-feat:hover .perf-feat-info {
+        transform: translateY(0);
+      }
+      .perf-feat-lbl {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        letter-spacing: 0.3em;
+        color: var(--blood);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .perf-feat-title {
+        font-family: var(--ff-c);
+        font-size: 1.6rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--bone);
+        margin-bottom: 4px;
+      }
+      .perf-feat-venue {
+        font-family: var(--ff-m);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        color: rgba(232, 228, 220, 0.45);
+      }
+      /* Embed */
+      .perf-embed {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+      }
+      .perf-embed iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .perf-embed video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #000;
+      }
+      .perf-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 11;
+        width: 34px;
+        height: 34px;
+        background: rgba(0, 0, 0, 0.85);
+        border: 1px solid rgba(232, 228, 220, 0.2);
+        color: var(--bone);
+        font-family: var(--ff-m);
+        font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: background 0.2s;
+      }
+      .perf-close:hover {
+        background: var(--blood);
+      }
+      /* Queue */
+      .perf-queue {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--blood) rgba(0, 0, 0, 0.2);
+        border-left: 1px solid rgba(232, 228, 220, 0.055);
+        width: 340px;
+        flex-shrink: 0;
+      }
+      .perf-queue::-webkit-scrollbar {
+        width: 2px;
+      }
+      .perf-queue::-webkit-scrollbar-thumb {
+        background: var(--blood);
+      }
+      .perf-item {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+        border-bottom: 1px solid rgba(232, 228, 220, 0.055);
+        cursor: none;
+        transition: background 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .perf-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--blood);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .perf-item:hover {
+        background: rgba(200, 0, 10, 0.04);
+      }
+      .perf-item:hover::before {
+        transform: scaleY(1);
+      }
+      .perf-item.active {
+        background: rgba(200, 0, 10, 0.07);
+      }
+      .perf-item.active::before {
+        transform: scaleY(1);
+      }
+      .perf-item-thumb {
+        width: 88px;
+        height: 66px;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .perf-item-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.7;
+        transition:
+          opacity 0.3s,
+          transform 0.4s;
+      }
+      .perf-item:hover .perf-item-img {
+        opacity: 0.9;
+        transform: scale(1.06);
+      }
+      .perf-item-fallback {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #0d0000, #1a1a1a);
+      }
+      .perf-item-play {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.3);
+        transition: background 0.3s;
+      }
+      .perf-item:hover .perf-item-play {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .perf-item-play-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(200, 0, 10, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.3s,
+          background 0.3s;
+        animation: playPulse 3s ease-in-out infinite;
+      }
+      .perf-item:hover .perf-item-play-icon {
+        transform: scale(1.15);
+        background: var(--blood);
+        animation: none;
+      }
+      .perf-item-play-icon::after {
+        content: "";
+        border-style: solid;
+        border-width: 5px 0 5px 9px;
+        border-color: transparent transparent transparent var(--bone);
+        margin-left: 2px;
+      }
+      .perf-item-info {
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+        min-width: 0;
+      }
+      .perf-item-title {
+        font-family: var(--ff-c);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--bone);
+        margin-bottom: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .perf-item-venue {
+        font-family: var(--ff-m);
+        font-size: 0.42rem;
+        letter-spacing: 0.14em;
+        color: rgba(232, 228, 220, 0.32);
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .perf-item-date {
+        font-family: var(--ff-m);
+        font-size: 0.4rem;
+        letter-spacing: 0.1em;
+        color: rgba(200, 0, 10, 0.6);
+      }
+
+      /*─────── YOUTUBE ───────*/
+      .yt-feat-wrap {
+        position: relative;
+        margin-bottom: 28px;
+        cursor: none;
+      }
+      .yt-feat-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        position: relative;
+        overflow: hidden;
+      }
+      .yt-thumb-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.4s;
+      }
+      .yt-feat-wrap:hover .yt-thumb-img {
+        transform: scale(1.03);
+      }
+      .yt-thumb-fallback {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #0a0000, #280000 50%, #1a0000);
+      }
+      .yt-thumb-fallback::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent 0,
+          transparent 14px,
+          rgba(200, 0, 10, 0.04) 14px,
+          rgba(200, 0, 10, 0.04) 28px
+        );
+      }
+      .yt-feat-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.22);
+        transition: background 0.3s;
+      }
+      .yt-feat-wrap:hover .yt-feat-overlay {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .yt-play-big {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: var(--blood);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.3s,
+          background 0.3s,
+          box-shadow 0.3s;
+        animation: playPulse 2.5s ease-in-out infinite;
+      }
+      .yt-play-big::after {
+        content: "";
+        border-style: solid;
+        border-width: 11px 0 11px 20px;
+        border-color: transparent transparent transparent var(--bone);
+        margin-left: 5px;
+      }
+      .yt-feat-wrap:hover .yt-play-big {
+        transform: scale(1.1);
+        background: var(--ember);
+        box-shadow: 0 0 40px rgba(200, 0, 10, 0.4);
+        animation: none;
+      }
+      .yt-feat-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 22px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.92), transparent);
+      }
+      .yt-feat-lbl {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        letter-spacing: 0.28em;
+        color: var(--blood);
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      .yt-feat-title {
+        font-family: var(--ff-c);
+        font-size: 1.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--bone);
+      }
+      .yt-feat-stats {
+        font-family: var(--ff-m);
+        font-size: 0.48rem;
+        letter-spacing: 0.14em;
+        color: rgba(232, 228, 220, 0.45);
+        margin-top: 3px;
+      }
+      .yt-embed {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+      }
+      .yt-embed iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .yt-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 11;
+        width: 32px;
+        height: 32px;
+        background: rgba(0, 0, 0, 0.85);
+        border: 1px solid rgba(232, 228, 220, 0.2);
+        color: var(--bone);
+        font-family: var(--ff-m);
+        font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: none;
+        transition: background 0.2s;
+      }
+      .yt-close:hover {
+        background: var(--blood);
+      }
+      .yt-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .yt-card {
+        cursor: none;
+        position: relative;
+      }
+      .yt-card-thumb {
+        width: 100%;
+        aspect-ratio: 16/9;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 9px;
+      }
+      .yt-card-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.3s;
+      }
+      .yt-card:hover .yt-card-img {
+        transform: scale(1.05);
+      }
+      .yt-card-fallback {
+        position: absolute;
+        inset: 0;
+      }
+      .yt-card:nth-child(1) .yt-card-fallback {
+        background: linear-gradient(135deg, #0a0000, #220000);
+      }
+      .yt-card:nth-child(2) .yt-card-fallback {
+        background: linear-gradient(135deg, #0d0d0d, #181818);
+      }
+      .yt-card:nth-child(3) .yt-card-fallback {
+        background: linear-gradient(135deg, #110000, #0d0000);
+      }
+      .yt-card-play {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.3);
+        transition: background 0.3s;
+      }
+      .yt-card:hover .yt-card-play {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .yt-play-sm {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(200, 0, 10, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.3s,
+          background 0.3s,
+          box-shadow 0.3s;
+        animation: playPulse 3s ease-in-out infinite;
+      }
+      .yt-play-sm::after {
+        content: "";
+        border-style: solid;
+        border-width: 7px 0 7px 12px;
+        border-color: transparent transparent transparent var(--bone);
+        margin-left: 3px;
+      }
+      .yt-card:hover .yt-play-sm {
+        transform: scale(1.12);
+        background: var(--blood);
+        box-shadow: 0 0 24px rgba(200, 0, 10, 0.35);
+        animation: none;
+      }
+      .yt-card-title {
+        font-family: var(--ff-c);
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--bone);
+        margin-bottom: 3px;
+      }
+      .yt-card-meta {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        letter-spacing: 0.14em;
+        color: rgba(232, 228, 220, 0.32);
+        text-transform: uppercase;
+      }
+      .yt-card-embed {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+      }
+      .yt-card-embed iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /*─────── PHOTOS ───────*/
+      /* Film strip — Photoshoots */
+      .photo-section-label {
+        font-family: var(--ff-m);
+        font-size: 0.5rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--blood);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .photo-section-label::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--blood);
+        display: block;
+      }
+      .film-scroll-wrap {
+        overflow-x: auto;
+        cursor: ew-resize;
+        scrollbar-width: thin;
+        scrollbar-color: var(--blood) rgba(0, 0, 0, 0.3);
+        margin: 0 -52px 12px;
+        padding: 0;
+        user-select: none;
+        background: #050505;
+      }
+      .film-scroll-wrap::-webkit-scrollbar {
+        height: 2px;
+      }
+      .film-scroll-wrap::-webkit-scrollbar-thumb {
+        background: var(--blood);
+      }
+      .film-outer {
+        background: #050505;
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .sprocket-rail {
+        display: flex;
+        background: #060606;
+        padding: 5px 10px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .sp-hole {
+        width: 16px;
+        height: 11px;
+        border-radius: 2px;
+        background: var(--void);
+        border: 1px solid rgba(255, 255, 255, 0.065);
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+      .strip-row {
+        display: flex;
+        gap: 3px;
+        padding: 3px 10px;
+        background: #050505;
+      }
+      .sf {
+        width: 170px;
+        height: 106px;
+        flex-shrink: 0;
+        border: 1px solid rgba(232, 228, 220, 0.09);
+        position: relative;
+        overflow: hidden;
+        filter: grayscale(0.55) contrast(1.1);
+        transition:
+          filter 0.3s,
+          border-color 0.3s,
+          transform 0.3s;
+        cursor: pointer;
+      }
+      .sf:hover {
+        filter: grayscale(0.1) contrast(1.1) sepia(0.18);
+        border-color: var(--blood);
+        transform: scaleY(1.04);
+      }
+      .sf-art {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+      .sf-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 2;
+      }
+      .sf-num {
+        position: absolute;
+        bottom: 4px;
+        right: 6px;
+        font-family: var(--ff-m);
+        font-size: 0.36rem;
+        letter-spacing: 0.08em;
+        color: rgba(232, 228, 220, 0.4);
+        z-index: 2;
+      }
+      /* Film strip caption — slides up on hover */
+      .sf-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.92), transparent);
+        padding: 18px 8px 6px;
+        font-family: var(--ff-m);
+        font-size: 0.38rem;
+        letter-spacing: 0.1em;
+        color: rgba(232, 228, 220, 0.75);
+        text-transform: uppercase;
+        z-index: 3;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      }
+      .sf:hover .sf-caption {
+        transform: translateY(0);
+      }
+      /* Street grid */
+      .street-grid-label {
+        margin-top: 44px;
+      }
+      .street-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+      }
+      .sgf {
+        aspect-ratio: 3/2;
+        border: 1px solid rgba(232, 228, 220, 0.09);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        filter: grayscale(0.45) contrast(1.06);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .sgf:hover {
+        filter: grayscale(0) contrast(1.1) sepia(0.18);
+        border-color: rgba(200, 0, 10, 0.5);
+        transform: scale(1.04);
+        z-index: 5;
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.8),
+          0 0 20px rgba(200, 0, 10, 0.14);
+      }
+      .sgf-art {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+      .sgf-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 2;
+      }
+      .sgf-num {
+        position: absolute;
+        top: 4px;
+        left: 6px;
+        font-family: var(--ff-m);
+        font-size: 0.34rem;
+        letter-spacing: 0.06em;
+        color: rgba(232, 228, 220, 0.3);
+        z-index: 2;
+      }
+      /* Street grid caption — always visible, dims at rest */
+      .sgf-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 6px 8px;
+        font-family: var(--ff-m);
+        font-size: 0.38rem;
+        letter-spacing: 0.1em;
+        color: rgba(232, 228, 220, 0.3);
+        text-transform: uppercase;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        z-index: 3;
+        transition: color 0.3s;
+      }
+      .sgf:hover .sgf-caption {
+        color: rgba(232, 228, 220, 0.85);
+      }
+
+      /*─────── PRESS ───────*/
+      .press-layout {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 64px;
+        align-items: start;
+      }
+      .press-bio-label {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--blood);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .press-bio-label::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--blood);
+        display: block;
+      }
+      .press-bio-text {
+        font-family: var(--ff-m);
+        font-size: 0.72rem;
+        line-height: 2.1;
+        color: rgba(232, 228, 220, 0.6);
+      }
+      .press-bio-text p + p {
+        margin-top: 1.5em;
+      }
+      .press-bio-text strong {
+        color: var(--bone);
+        font-weight: 700;
+      }
+      .press-tap-note {
+        font-family: var(--ff-m);
+        font-size: 0.5rem;
+        letter-spacing: 0.18em;
+        color: rgba(232, 228, 220, 0.22);
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(232, 228, 220, 0.055);
+      }
+      .press-tap-note a {
+        color: rgba(200, 0, 10, 0.6);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(200, 0, 10, 0.25);
+        padding-bottom: 1px;
+        transition: color 0.2s;
+      }
+      .press-tap-note a:hover {
+        color: var(--ember);
+      }
+      .press-quotes {
+        margin-top: 52px;
+      }
+      .press-quotes-label {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--blood);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .press-quotes-label::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--blood);
+        display: block;
+      }
+      .pull-quote {
+        padding: 28px 0;
+        border-top: 1px solid rgba(232, 228, 220, 0.06);
+        position: relative;
+        transition: background 0.3s;
+      }
+      .pull-quote:hover {
+        background: rgba(200, 0, 10, 0.025);
+      }
+      .pull-quote::before {
+        content: '"';
+        font-family: var(--ff-d);
+        font-size: 7rem;
+        line-height: 0.7;
+        color: rgba(200, 0, 10, 0.1);
+        position: absolute;
+        top: 16px;
+        left: -8px;
+        pointer-events: none;
+        transition: color 0.3s;
+      }
+      .pull-quote:hover::before {
+        color: rgba(200, 0, 10, 0.2);
+      }
+      .pull-quote-text {
+        font-family: var(--ff-c);
+        font-size: clamp(1.3rem, 2vw, 1.9rem);
+        font-weight: 900;
+        font-style: italic;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--bone);
+        margin-bottom: 14px;
+        padding-left: 16px;
+      }
+      .pull-quote-source {
+        font-family: var(--ff-m);
+        font-size: 0.48rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.3);
+        padding-left: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .pull-quote-source::before {
+        content: "—";
+        color: var(--blood);
+      }
+      .press-sidebar {
+      }
+      .press-facts-label {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--blood);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .press-facts-label::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--blood);
+        display: block;
+      }
+      .fact-row {
+        display: flex;
+        flex-direction: column;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(232, 228, 220, 0.055);
+      }
+      .fact-key {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.3);
+        margin-bottom: 4px;
+      }
+      .fact-val {
+        font-family: var(--ff-c);
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: var(--bone);
+      }
+
+      /*═══════════════════════════════ LIGHTBOX ════════════════════════════*/
+      #lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 7, 7, 0.97);
+        z-index: 90000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: none;
+        animation: lbIn 0.3s ease;
+        padding: 60px 24px 32px;
+      }
+      #lightbox.open {
+        display: flex;
+      }
+      @keyframes lbIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* Inner — full width up to max */
+      .lb-inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: min(880px, 90vw);
+      }
+      /* Image frame — no forced ratio, fits any image naturally */
+      .lb-art {
+        width: 100%;
+        max-height: 74vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #080808;
+        border: 1px solid rgba(232, 228, 220, 0.07);
+        overflow: hidden;
+        animation: lbScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        min-height: 200px;
+      }
+      .lb-art img {
+        max-width: 100%;
+        max-height: 74vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+      @keyframes lbScale {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      /* Close — top right corner, always visible */
+      .lb-close {
+        position: absolute;
+        top: -44px;
+        right: 0;
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.5);
+        cursor: none;
+        padding: 8px 18px;
+        border: 1px solid rgba(232, 228, 220, 0.12);
+        transition:
+          color 0.2s,
+          background 0.2s,
+          border-color 0.2s;
+      }
+      .lb-close:hover {
+        color: var(--bone);
+        background: var(--blood);
+        border-color: var(--blood);
+      }
+      /* Caption row */
+      .lb-caption {
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 12px;
+      }
+      .lb-num {
+        font-family: var(--ff-m);
+        font-size: 0.44rem;
+        letter-spacing: 0.22em;
+        color: rgba(232, 228, 220, 0.2);
+        flex-shrink: 0;
+      }
+      .lb-photo-caption {
+        font-family: var(--ff-m);
+        font-size: 0.46rem;
+        letter-spacing: 0.16em;
+        color: rgba(232, 228, 220, 0.4);
+        text-transform: uppercase;
+        flex: 1;
+        text-align: center;
+      }
+      /* Arrow buttons — styled as proper clickable elements */
+      .lb-arrows {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .lb-arrow {
+        font-family: var(--ff-m);
+        font-size: 0.52rem;
+        letter-spacing: 0.16em;
+        color: rgba(232, 228, 220, 0.5);
+        cursor: none;
+        padding: 8px 18px;
+        border: 1px solid rgba(232, 228, 220, 0.12);
+        transition:
+          color 0.2s,
+          background 0.2s,
+          border-color 0.2s;
+        user-select: none;
+      }
+      .lb-arrow:hover {
+        color: var(--bone);
+        background: var(--blood);
+        border-color: var(--blood);
+      }
+
+      /*═══════════════════════════════ TAP IN ══════════════════════════════*/
+      #reach {
+        background: var(--ash);
+        padding: 110px 52px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .reach-inner {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+      }
+      .reach-hd {
+        font-family: var(--ff-d);
+        font-size: clamp(3rem, 10vw, 9rem);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        color: var(--bone);
+        margin-bottom: 52px;
+      }
+      .reach-hd span {
+        color: var(--blood);
+      }
+      .reach-div {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          var(--blood),
+          rgba(200, 0, 10, 0.08)
+        );
+        margin-bottom: 52px;
+      }
+      .reach-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid rgba(232, 228, 220, 0.055);
+      }
+      .rcell {
+        padding: 30px;
+        border-right: 1px solid rgba(232, 228, 220, 0.055);
+        transition: background 0.3s;
+      }
+      .rcell:last-child {
+        border-right: none;
+      }
+      .rcell:hover {
+        background: rgba(200, 0, 10, 0.04);
+      }
+      .rcell-lbl {
+        font-family: var(--ff-m);
+        font-size: 0.48rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--blood);
+        margin-bottom: 9px;
+      }
+      .rcell-val {
+        font-family: var(--ff-c);
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: var(--bone);
+        text-decoration: none;
+        transition: color 0.2s;
+        display: block;
+        word-break: break-all;
+      }
+      .rcell-val:hover {
+        color: var(--ember);
+      }
+      .reach-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid rgba(232, 228, 220, 0.055);
+      }
+      .reach-soc {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        flex-wrap: wrap;
+      }
+      .reach-soc a {
+        font-family: var(--ff-m);
+        font-size: 0.5rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(232, 228, 220, 0.35);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .reach-soc a:hover {
+        color: var(--ember);
+      }
+      .reach-copy {
+        font-family: var(--ff-m);
+        font-size: 0.44rem;
+        letter-spacing: 0.14em;
+        color: rgba(232, 228, 220, 0.14);
+        text-align: right;
+        line-height: 2;
+      }
+      .reach-copy a {
+        color: rgba(232, 228, 220, 0.35);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(200, 0, 10, 0.3);
+        padding-bottom: 1px;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .reach-copy a:hover {
+        color: var(--ember);
+        border-color: var(--ember);
+      }
+      .reach-circ {
+        position: absolute;
+        right: -200px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 580px;
+        height: 580px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 0, 10, 0.04);
+        pointer-events: none;
+      }
+      .reach-circ::before {
+        content: "";
+        position: absolute;
+        inset: 60px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 0, 10, 0.03);
+      }
+
+      /*═══════════════════════════════ RESPONSIVE ══════════════════════════*/
+      @media (max-width: 1100px) {
+        .perf-layout {
+          flex-direction: column;
+          min-height: auto;
+          border: none;
+        }
+        .perf-feat-wrap {
+          width: 100%;
+        }
+        .perf-feat-sizer {
+          padding-top: 56.25%;
+        }
+        .perf-queue {
+          width: 100%;
+          border-left: none;
+          border-top: 1px solid rgba(232, 228, 220, 0.055);
+          max-height: 340px;
+        }
+        .yt-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .street-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .press-layout {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .press-sidebar {
+          border-top: 1px solid rgba(232, 228, 220, 0.06);
+          padding-top: 36px;
+        }
+      }
+      @media (max-width: 768px) {
+        nav {
+          padding: 18px 22px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .nav-burger {
+          display: flex;
+        }
+        .hero-content {
+          padding: 0 22px;
+        }
+        .scroll-cue,
+        .hero-slash {
+          display: none;
+        }
+        #identity,
+        #archive,
+        #reach {
+          padding: 72px 22px;
+        }
+        #vault {
+          padding: 72px 0 0;
+        }
+        .vault-top {
+          padding: 0 22px;
+        }
+        .vault-tabs {
+          padding: 0 22px;
+        }
+        .v-panel {
+          padding: 32px 22px 52px;
+        }
+        .id-inner {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+        .id-wm {
+          font-size: 5rem;
+          right: -14px;
+          bottom: -20px;
+        }
+        .arts-grid {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .art-item.featured::before {
+          display: none;
+        }
+        /* Performances — player always visible, padding-top trick guarantees height */
+        .perf-layout {
+          display: flex;
+          flex-direction: column;
+          border: none;
+          min-height: auto;
+        }
+        .perf-feat-wrap {
+          width: 100%;
+          flex-shrink: 0;
+        }
+        .perf-feat-sizer {
+          padding-top: 56.25%;
+          position: relative;
+          width: 100%;
+        }
+        .perf-feat {
+          position: absolute;
+          inset: 0;
+        }
+        .perf-feat-title {
+          font-size: 1.1rem;
+        }
+        .perf-feat-info {
+          padding: 16px;
+        }
+        .perf-queue {
+          width: 100%;
+          max-height: 300px;
+          border-left: none;
+          border-top: 1px solid rgba(232, 228, 220, 0.055);
+        }
+        .perf-item-thumb {
+          width: 72px;
+          height: 54px;
+        }
+        .yt-grid {
+          grid-template-columns: 1fr;
+        }
+        .film-scroll-wrap {
+          margin: 0 -22px 12px;
+        }
+        .sf {
+          width: 130px;
+          height: 81px;
+        }
+        .street-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .reach-grid {
+          grid-template-columns: 1fr;
+        }
+        .rcell {
+          border-right: none;
+          border-bottom: 1px solid rgba(232, 228, 220, 0.055);
+        }
+        .reach-bottom {
+          flex-direction: column;
+          gap: 18px;
+          align-items: flex-start;
+        }
+        #btt {
+          bottom: 24px;
+          left: 24px;
+        }
+      }
+      @media (max-width: 480px) {
+        .hero-meta {
+          gap: 14px;
+        }
+        .v-tab {
+          padding: 12px 10px;
+          font-size: 0.48rem;
+          letter-spacing: 0.15em;
+        }
+        .pull-quote-text {
+          font-size: 1.1rem;
+        }
+        .reach-soc {
+          gap: 14px;
+        }
+        .perf-queue {
+          max-height: 260px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="ld-name">ARTIST</div>
+      <div class="ld-track"><div class="ld-fill" id="lf"></div></div>
     </div>
-  </div>
-</div>
+    <div id="cd"></div>
+    <div id="cr"></div>
+    <div id="grain"></div>
+    <button
+      id="btt"
+      aria-label="Back to top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    >
+      <svg viewBox="0 0 14 14"><polyline points="2,10 7,4 12,10" /></svg>
+    </button>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">ARTIST</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#identity">Identity</a></li>
-    <li><a href="#archive">Archive</a></li>
-    <li><a href="#vault">The Vault</a></li>
-    <li><a href="#reach">Tap In</a></li>
-  </ul>
-  <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <!-- ═══ HERO BACKGROUND IMAGE ═══ Replace src with your photo path/URL -->
-  <img class="hero-bg-img" id="heroBgImg"
-       src="https://images.unsplash.com/photo-1526218626217-dc65a29bb444?w=1600&q=80&fit=crop&crop=top"
-       alt="" />
-  <div class="hero-bg-fade"></div>
-  <canvas id="hc"></canvas>
-  <div class="hero-slash"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">ZA · MMXXVI · JOHANNESBURG</div>
-    <h1 class="hero-name" data-text="ARTIST">ARTIST</h1>
-    <div class="hero-div"></div>
-    <div class="hero-meta">
-      <span class="on">Rapper</span><span>Creative</span><span>Photography</span><span>Street</span>
-    </div>
-  </div>
-  <div class="scroll-cue"></div>
-</section>
-
-<!-- MARQUEE -->
-<div class="mq-strip"><div class="mq-inner">
-  <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
-  <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
-  <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
-  <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
-  <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
-  <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
-  <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
-  <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
-  <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
-  <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
-  <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
-  <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
-  <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
-  <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
-</div></div>
-
-<!-- IDENTITY -->
-<section id="identity">
-  <!-- ═══ IDENTITY BACKGROUND IMAGE ═══ Replace src with your photo -->
-  <img class="id-bg-img" id="idBgImg"
-       src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&q=80&auto=format&fit=crop"
-       alt="" />
-  <div class="id-bg-fade"></div>
-  <div class="id-inner">
-    <div>
-      <div class="id-num reveal">001</div>
-      <div class="id-over reveal rd1">Identity</div>
-      <h2 class="id-stmt">
-        <div class="stag-line"><span class="stag-inner pword" data-speed="-0.07">Born From</span></div>
-        <div class="stag-line"><span class="stag-inner pword" data-speed="0.1"><em>Concrete.</em></span></div>
-        <div class="stag-line"><span class="stag-inner pword" data-speed="-0.055">Forged In</span></div>
-        <div class="stag-line"><span class="stag-inner pword" data-speed="0.09">Motion.</span></div>
-      </h2>
-    </div>
-    <div>
-      <p class="id-bio reveal rd2">The Artist is a South African rapper, photographer, and street creative based in Johannesburg. His work sits at the intersection of raw urban storytelling and deliberate artistic vision — where the concrete speaks and silence has texture.<br><br>Drawing from the pulse of Jozi's streets, he constructs worlds rather than songs. Each project is a frame. Each verse, a photograph. Each drop, a statement carved from the city he calls home.</p>
-      <div class="id-tags reveal rd3">
-        <div class="id-tag"><span>Rap</span></div>
-        <div class="id-tag"><span>Street Photography</span></div>
-        <div class="id-tag"><span>Fashion</span></div>
-        <div class="id-tag"><span>Johannesburg</span></div>
-        <div class="id-tag"><span>Multidisciplinary</span></div>
-        <div class="id-tag"><span>Independent</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="id-wm">ARTIST</div>
-</section>
-
-<!-- ARCHIVE -->
-<section id="archive">
-  <!-- ═══ DISCOGRAPHY BACKGROUND IMAGE ═══ Replace src with your photo -->
-  <img class="arch-bg-img" id="archBgImg"
-       src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop"
-       alt="" />
-  <div class="arch-bg-mask"></div>
-  <div style="position:relative;z-index:2">
-  <div class="section-tag reveal">002 — The Archive</div>
-  <h2 class="arch-hd reveal rd1">Disco<span>g</span>raphy</h2>
-  <div class="arts-grid">
-    <div class="art-item featured">
-      <div class="vw"><div class="vd"><div class="vl r"><div class="vl-t">ARTIST<br>×<br>JHB</div></div><div class="vh"></div></div></div>
-      <div class="art-meta reveal rd1"><div class="art-title">Artist × JHB</div><div class="art-sub">MMXXVI · EP · 6 Tracks</div><div class="art-lbl">LATEST RELEASE</div></div>
-    </div>
-    <div class="art-item">
-      <div class="cw"><div class="cb"><div class="csc tl"></div><div class="csc tr"></div><div class="cwin"><div class="reel"></div><div class="reel"></div></div><div class="cls"><span class="ct">MOTION TAPE</span><span class="cy">MMXXV</span></div></div></div>
-      <div class="art-meta reveal rd2"><div class="art-title">Motion Tape</div><div class="art-sub">MMXXV · Mixtape · 12 Tracks</div><div class="art-lbl">STREET RELEASE</div></div>
-    </div>
-    <div class="art-item">
-      <div class="vw"><div class="vd"><div class="vl d"><div class="vl-t">CONCRETE<br>EP</div></div><div class="vh"></div></div></div>
-      <div class="art-meta reveal rd3"><div class="art-title">Concrete EP</div><div class="art-sub">MMXXIV · EP · 7 Tracks</div><div class="art-lbl">DEBUT PROJECT</div></div>
-    </div>
-  </div>
-  </div><!-- /z-index wrapper -->
-  <div class="arch-bg">ARCHIVE</div>
-</section>
-
-<!-- THE VAULT -->
-<section id="vault">
-  <div class="vault-top">
-    <div class="section-tag reveal">003 — The Vault</div>
-    <h2 class="vault-hd reveal rd1">Press <em>Kit</em></h2>
-  </div>
-  <div class="vault-tabs" id="vaultTabs">
-    <div class="v-tab on" data-tab="music">Performances</div>
-    <div class="v-tab" data-tab="youtube">YouTube</div>
-    <div class="v-tab" data-tab="photos">Photos</div>
-    <div class="v-tab" data-tab="press">Press</div>
-  </div>
-  <div class="vault-panels">
-
-    <!-- MUSIC / PERFORMANCES -->
-    <div class="v-panel on" data-tab="music" id="perfPanel">
-      <!-- Built by JS from PERFORMANCES config -->
-    </div>
-
-    <!-- YOUTUBE -->
-    <div class="v-panel" data-tab="youtube" id="ytPanel">
-      <!-- Built by JS from VIDEOS config -->
-    </div>
-
-    <!-- PHOTOS -->
-    <div class="v-panel" data-tab="photos">
-      <div class="photo-section-label">Photoshoots</div>
-      <div class="film-scroll-wrap" id="filmScrollWrap">
-        <div class="film-outer" id="filmOuter"></div>
-      </div>
-      <div class="photo-section-label street-grid-label">Street / JHB Series</div>
-      <div class="street-grid" id="streetGrid"></div>
-    </div>
-
-    <!-- PRESS -->
-    <div class="v-panel" data-tab="press">
-      <div class="press-layout">
-        <div>
-          <div class="press-bio-label">Press Bio</div>
-          <div class="press-bio-text">
-            <!-- ═══ EDIT BIO HERE ═══ -->
-            <p><strong>The Artist</strong> is a Johannesburg-born rapper, photographer, and multidisciplinary street creative carving his own lane at the intersection of South African hip-hop and visual culture. Raised on the concrete rhythms of Jozi, his music is as much architecture as it is sound — each track a deliberate frame, each project a world built from the ground up.</p>
-            <p>His debut <em>Concrete EP</em> announced an artist uninterested in template thinking — raw, considered, street-rooted but never confined to it. The follow-up <em>Motion Tape</em> expanded the universe, blending photography, fashion, and verse into something that resists genre. His latest EP, <em>Artist × JHB</em>, is the most complete statement yet: six tracks that document a city, a generation, and a creative refusing to wait for permission.</p>
-            <!-- Add a third paragraph here if needed:
-            <p>...</p> -->
-          </div>
-          <div class="press-tap-note">For all bookings, press and collaboration enquiries — <a href="#reach">Tap In below.</a></div>
-          <div class="press-quotes">
-            <div class="press-quotes-label">Words</div>
-            <!-- ═══ EDIT QUOTES HERE ═══ -->
-            <div class="pull-quote">
-              <div class="pull-quote-text">One of Jozi's most deliberate young voices — he doesn't just rap, he documents.</div>
-              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
-            </div>
-            <div class="pull-quote">
-              <div class="pull-quote-text">Artist × JHB feels like a city talking back.</div>
-              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
-            </div>
-            <div class="pull-quote">
-              <div class="pull-quote-text">Street photography, fashion and rap — he moves between all three without losing himself in any.</div>
-              <div class="pull-quote-source">Placeholder — Replace with real press quote &amp; source</div>
-            </div>
+    <!-- LIGHTBOX -->
+    <div id="lightbox">
+      <div class="lb-inner">
+        <div class="lb-close" id="lb-close">[ CLOSE ]</div>
+        <div class="lb-art" id="lb-art"></div>
+        <div class="lb-caption">
+          <span class="lb-num" id="lb-num">01 / 12</span>
+          <span class="lb-photo-caption" id="lb-caption-text"></span>
+          <div class="lb-arrows">
+            <span class="lb-arrow" id="lb-prev">← PREV</span>
+            <span class="lb-arrow" id="lb-next">NEXT →</span>
           </div>
         </div>
-        <div class="press-sidebar">
-          <div class="press-facts-label">Key Facts</div>
-          <!-- ═══ EDIT FACTS HERE ═══ -->
-          <div class="fact-row"><div class="fact-key">Based In</div><div class="fact-val">Johannesburg, South Africa</div></div>
-          <div class="fact-row"><div class="fact-key">Genre</div><div class="fact-val">Hip-Hop / Street Rap</div></div>
-          <div class="fact-row"><div class="fact-key">Active Since</div><div class="fact-val">MMXXIV</div></div>
-          <div class="fact-row"><div class="fact-key">Disciplines</div><div class="fact-val">Music · Photography · Fashion</div></div>
-          <div class="fact-row"><div class="fact-key">Status</div><div class="fact-val">Independent</div></div>
-          <div class="fact-row"><div class="fact-key">Latest Release</div><div class="fact-val">Artist × JHB — MMXXVI</div></div>
-        </div>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- TAP IN -->
-<section id="reach">
-  <div class="reach-circ"></div>
-  <div class="reach-inner">
-    <div class="section-tag reveal">004 — Contact</div>
-    <h2 class="reach-hd reveal rd1">Tap<br><span>In.</span></h2>
-    <div class="reach-div reveal rd2"></div>
-    <div class="reach-grid reveal rd3" style="grid-template-columns:1fr">
-      <div class="rcell" style="border-right:none"><div class="rcell-lbl">Booking & All Enquiries</div><a href="mailto:book@theartist.co.za" class="rcell-val">book@theartist.co.za</a></div>
-    </div>
-    <div class="reach-bottom reveal rd4">
-      <ul class="reach-soc">
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">SoundCloud</a></li>
-        <li><a href="#">Spotify</a></li>
-        <li><a href="#">Pinterest</a></li>
-        <li><a href="#">X / Twitter</a></li>
-        <li><a href="#">YouTube</a></li>
+    <!-- NAV -->
+    <nav id="nav">
+      <a href="#hero" class="nav-logo">Concept ARTIST</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#identity">Identity</a></li>
+        <li><a href="#archive">Archive</a></li>
+        <li><a href="#vault">The Vault</a></li>
+        <li><a href="#reach">Tap In</a></li>
       </ul>
-      <div class="reach-copy">
-        © THE ARTIST MMXXVI · Johannesburg<br>
-        Designed &amp; Built by <a href="#" target="_blank">Ambient Electron</a>
+      <div class="nav-burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <!-- ═══ HERO BACKGROUND IMAGE ═══ Replace src with your photo path/URL -->
+      <img
+        class="hero-bg-img"
+        id="heroBgImg"
+        src="https://images.unsplash.com/photo-1526218626217-dc65a29bb444?w=1600&q=80&fit=crop&crop=top"
+        alt=""
+      />
+      <div class="hero-bg-fade"></div>
+      <canvas id="hc"></canvas>
+      <div class="hero-slash"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">ZA · MMXXVI · JOHANNESBURG</div>
+        <h1 class="hero-name" data-text="ARTIST">ARTIST</h1>
+        <div class="hero-div"></div>
+        <div class="hero-meta">
+          <span class="on">Rapper</span><span>Creative</span
+          ><span>Photography</span><span>Street</span>
+        </div>
+      </div>
+      <div class="scroll-cue"></div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="mq-strip">
+      <div class="mq-inner">
+        <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
+        <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
+        <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
+        <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
+        <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
+        <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
+        <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
+        <span class="mq-text">ARTIST</span><span class="mq-sep">◆</span>
+        <span class="mq-text">JOHANNESBURG</span><span class="mq-sep">◆</span>
+        <span class="mq-text">MUSIC</span><span class="mq-sep">◆</span>
+        <span class="mq-text">FASHION</span><span class="mq-sep">◆</span>
+        <span class="mq-text">PHOTOGRAPHY</span><span class="mq-sep">◆</span>
+        <span class="mq-text">STREET</span><span class="mq-sep">◆</span>
+        <span class="mq-text">CONCRETE</span><span class="mq-sep">◆</span>
       </div>
     </div>
-  </div>
-</section>
 
-<script src="./js/app.js"></script>
-</body>
+    <!-- IDENTITY -->
+    <section id="identity">
+      <!-- ═══ IDENTITY BACKGROUND IMAGE ═══ Replace src with your photo -->
+      <img
+        class="id-bg-img"
+        id="idBgImg"
+        src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&q=80&auto=format&fit=crop"
+        alt=""
+      />
+      <div class="id-bg-fade"></div>
+      <div class="id-inner">
+        <div>
+          <div class="id-num reveal">001</div>
+          <div class="id-over reveal rd1">Identity</div>
+          <h2 class="id-stmt">
+            <div class="stag-line">
+              <span class="stag-inner pword" data-speed="-0.07">Born From</span>
+            </div>
+            <div class="stag-line">
+              <span class="stag-inner pword" data-speed="0.1"
+                ><em>Concrete.</em></span
+              >
+            </div>
+            <div class="stag-line">
+              <span class="stag-inner pword" data-speed="-0.055"
+                >Forged In</span
+              >
+            </div>
+            <div class="stag-line">
+              <span class="stag-inner pword" data-speed="0.09">Motion.</span>
+            </div>
+          </h2>
+        </div>
+        <div>
+          <p class="id-bio reveal rd2">
+            The Artist is a South African rapper, photographer, and street
+            creative based in Johannesburg. His work sits at the intersection of
+            raw urban storytelling and deliberate artistic vision — where the
+            concrete speaks and silence has texture.<br /><br />Drawing from the
+            pulse of Jozi's streets, he constructs worlds rather than songs.
+            Each project is a frame. Each verse, a photograph. Each drop, a
+            statement carved from the city he calls home.
+          </p>
+          <div class="id-tags reveal rd3">
+            <div class="id-tag"><span>Rap</span></div>
+            <div class="id-tag"><span>Street Photography</span></div>
+            <div class="id-tag"><span>Fashion</span></div>
+            <div class="id-tag"><span>Johannesburg</span></div>
+            <div class="id-tag"><span>Multidisciplinary</span></div>
+            <div class="id-tag"><span>Independent</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="id-wm">ARTIST</div>
+    </section>
+
+    <!-- ARCHIVE -->
+    <section id="archive">
+      <!-- ═══ DISCOGRAPHY BACKGROUND IMAGE ═══ Replace src with your photo -->
+      <img
+        class="arch-bg-img"
+        id="archBgImg"
+        src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop"
+        alt=""
+      />
+      <div class="arch-bg-mask"></div>
+      <div style="position: relative; z-index: 2">
+        <div class="section-tag reveal">002 — The Archive</div>
+        <h2 class="arch-hd reveal rd1">Disco<span>g</span>raphy</h2>
+        <div class="arts-grid">
+          <div class="art-item featured">
+            <div class="vw">
+              <div class="vd">
+                <div class="vl r">
+                  <div class="vl-t">ARTIST<br />×<br />JHB</div>
+                </div>
+                <div class="vh"></div>
+              </div>
+            </div>
+            <div class="art-meta reveal rd1">
+              <div class="art-title">Artist × JHB</div>
+              <div class="art-sub">MMXXVI · EP · 6 Tracks</div>
+              <div class="art-lbl">LATEST RELEASE</div>
+            </div>
+          </div>
+          <div class="art-item">
+            <div class="cw">
+              <div class="cb">
+                <div class="csc tl"></div>
+                <div class="csc tr"></div>
+                <div class="cwin">
+                  <div class="reel"></div>
+                  <div class="reel"></div>
+                </div>
+                <div class="cls">
+                  <span class="ct">MOTION TAPE</span
+                  ><span class="cy">MMXXV</span>
+                </div>
+              </div>
+            </div>
+            <div class="art-meta reveal rd2">
+              <div class="art-title">Motion Tape</div>
+              <div class="art-sub">MMXXV · Mixtape · 12 Tracks</div>
+              <div class="art-lbl">STREET RELEASE</div>
+            </div>
+          </div>
+          <div class="art-item">
+            <div class="vw">
+              <div class="vd">
+                <div class="vl d">
+                  <div class="vl-t">CONCRETE<br />EP</div>
+                </div>
+                <div class="vh"></div>
+              </div>
+            </div>
+            <div class="art-meta reveal rd3">
+              <div class="art-title">Concrete EP</div>
+              <div class="art-sub">MMXXIV · EP · 7 Tracks</div>
+              <div class="art-lbl">DEBUT PROJECT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /z-index wrapper -->
+      <div class="arch-bg">ARCHIVE</div>
+    </section>
+
+    <!-- THE VAULT -->
+    <section id="vault">
+      <div class="vault-top">
+        <div class="section-tag reveal">003 — The Vault</div>
+        <h2 class="vault-hd reveal rd1">Press <em>Kit</em></h2>
+      </div>
+      <div class="vault-tabs" id="vaultTabs">
+        <div class="v-tab on" data-tab="music">Performances</div>
+        <div class="v-tab" data-tab="youtube">YouTube</div>
+        <div class="v-tab" data-tab="photos">Photos</div>
+        <div class="v-tab" data-tab="press">Press</div>
+      </div>
+      <div class="vault-panels">
+        <!-- MUSIC / PERFORMANCES -->
+        <div class="v-panel on" data-tab="music" id="perfPanel">
+          <!-- Built by JS from PERFORMANCES config -->
+        </div>
+
+        <!-- YOUTUBE -->
+        <div class="v-panel" data-tab="youtube" id="ytPanel">
+          <!-- Built by JS from VIDEOS config -->
+        </div>
+
+        <!-- PHOTOS -->
+        <div class="v-panel" data-tab="photos">
+          <div class="photo-section-label">Photoshoots</div>
+          <div class="film-scroll-wrap" id="filmScrollWrap">
+            <div class="film-outer" id="filmOuter"></div>
+          </div>
+          <div class="photo-section-label street-grid-label">
+            Street / JHB Series
+          </div>
+          <div class="street-grid" id="streetGrid"></div>
+        </div>
+
+        <!-- PRESS -->
+        <div class="v-panel" data-tab="press">
+          <div class="press-layout">
+            <div>
+              <div class="press-bio-label">Press Bio</div>
+              <div class="press-bio-text">
+                <!-- ═══ EDIT BIO HERE ═══ -->
+                <p>
+                  <strong>The Artist</strong> is a Johannesburg-born rapper,
+                  photographer, and multidisciplinary street creative carving
+                  his own lane at the intersection of South African hip-hop and
+                  visual culture. Raised on the concrete rhythms of Jozi, his
+                  music is as much architecture as it is sound — each track a
+                  deliberate frame, each project a world built from the ground
+                  up.
+                </p>
+                <p>
+                  His debut <em>Concrete EP</em> announced an artist
+                  uninterested in template thinking — raw, considered,
+                  street-rooted but never confined to it. The follow-up
+                  <em>Motion Tape</em> expanded the universe, blending
+                  photography, fashion, and verse into something that resists
+                  genre. His latest EP, <em>Artist × JHB</em>, is the most
+                  complete statement yet: six tracks that document a city, a
+                  generation, and a creative refusing to wait for permission.
+                </p>
+                <!-- Add a third paragraph here if needed:
+            <p>...</p> -->
+              </div>
+              <div class="press-tap-note">
+                For all bookings, press and collaboration enquiries —
+                <a href="#reach">Tap In below.</a>
+              </div>
+              <div class="press-quotes">
+                <div class="press-quotes-label">Words</div>
+                <!-- ═══ EDIT QUOTES HERE ═══ -->
+                <div class="pull-quote">
+                  <div class="pull-quote-text">
+                    One of Jozi's most deliberate young voices — he doesn't just
+                    rap, he documents.
+                  </div>
+                  <div class="pull-quote-source">
+                    Placeholder — Replace with real press quote &amp; source
+                  </div>
+                </div>
+                <div class="pull-quote">
+                  <div class="pull-quote-text">
+                    Artist × JHB feels like a city talking back.
+                  </div>
+                  <div class="pull-quote-source">
+                    Placeholder — Replace with real press quote &amp; source
+                  </div>
+                </div>
+                <div class="pull-quote">
+                  <div class="pull-quote-text">
+                    Street photography, fashion and rap — he moves between all
+                    three without losing himself in any.
+                  </div>
+                  <div class="pull-quote-source">
+                    Placeholder — Replace with real press quote &amp; source
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="press-sidebar">
+              <div class="press-facts-label">Key Facts</div>
+              <!-- ═══ EDIT FACTS HERE ═══ -->
+              <div class="fact-row">
+                <div class="fact-key">Based In</div>
+                <div class="fact-val">Johannesburg, South Africa</div>
+              </div>
+              <div class="fact-row">
+                <div class="fact-key">Genre</div>
+                <div class="fact-val">Hip-Hop / Street Rap</div>
+              </div>
+              <div class="fact-row">
+                <div class="fact-key">Active Since</div>
+                <div class="fact-val">MMXXIV</div>
+              </div>
+              <div class="fact-row">
+                <div class="fact-key">Disciplines</div>
+                <div class="fact-val">Music · Photography · Fashion</div>
+              </div>
+              <div class="fact-row">
+                <div class="fact-key">Status</div>
+                <div class="fact-val">Independent</div>
+              </div>
+              <div class="fact-row">
+                <div class="fact-key">Latest Release</div>
+                <div class="fact-val">Artist × JHB — MMXXVI</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAP IN -->
+    <section id="reach">
+      <div class="reach-circ"></div>
+      <div class="reach-inner">
+        <div class="section-tag reveal">004 — Contact</div>
+        <h2 class="reach-hd reveal rd1">Tap<br /><span>In.</span></h2>
+        <div class="reach-div reveal rd2"></div>
+        <div class="reach-grid reveal rd3" style="grid-template-columns: 1fr">
+          <div class="rcell" style="border-right: none">
+            <div class="rcell-lbl">Booking & All Enquiries</div>
+            <a href="mailto:book@theartist.co.za" class="rcell-val"
+              >book@theartist.co.za</a
+            >
+          </div>
+        </div>
+        <div class="reach-bottom reveal rd4">
+          <ul class="reach-soc">
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">SoundCloud</a></li>
+            <li><a href="#">Spotify</a></li>
+            <li><a href="#">Pinterest</a></li>
+            <li><a href="#">X / Twitter</a></li>
+            <li><a href="#">YouTube</a></li>
+          </ul>
+          <div class="reach-copy">
+            © THE ARTIST MMXXVI · Johannesburg<br />
+            Designed &amp; Built by
+            <a href="#" target="_blank">Ambient Electron</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      /*════════════════════════════════════════════════════════
+  ██████╗ ██╗   ██╗██╗  ██╗███╗   ██╗
+  ██╔══██╗╚██╗ ██╔╝╚██╗██╔╝████╗  ██║
+  ██████╔╝ ╚████╔╝  ╚███╔╝ ██╔██╗ ██║
+  ██╔══██╗  ╚██╔╝   ██╔██╗ ██║╚██╗██║
+  ██║  ██║   ██║   ██╔╝ ██╗██║ ╚████║
+  ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝
+  CONFIG — EDIT ALL CONTENT BELOW
+════════════════════════════════════════════════════════*/
+
+      /* ─────────────────────────────────────────────────────
+   PERFORMANCES CONFIG (Music Tab)
+   type:  "youtube" → set src to YouTube video ID
+          "file"    → set src to local video file path e.g. "videos/set.mp4"
+   thumb: path or URL to your own thumbnail image
+          leave "" to use CSS gradient placeholder
+───────────────────────────────────────────────────── */
+      const PERFORMANCES = [
+        {
+          title: "No Signal — Live at Bassline",
+          venue: "Bassline, Newtown · JHB",
+          date: "March MMXXVI",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          type: "youtube",
+          src: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+        {
+          title: "Concrete — Freestyle Session",
+          venue: "Studio, Braamfontein",
+          date: "January MMXXVI",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          type: "youtube",
+          src: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID  (or use type:"file" + src:"videos/x.mp4")
+        },
+        {
+          title: "Motion Tape — Full Set",
+          venue: "CRSSD Festival, Cape Town",
+          date: "November MMXXV",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          type: "youtube",
+          src: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+        {
+          title: "Jozi After Dark — Live",
+          venue: "Maboneng, JHB",
+          date: "September MMXXV",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          type: "file",
+          src: "", // ← LOCAL VIDEO FILE PATH e.g. "videos/jozi-live.mp4"
+        },
+      ];
+
+      /* ─────────────────────────────────────────────────────
+   YOUTUBE CONFIG (YouTube Tab)
+   thumb: path or URL to your own thumbnail image
+   vid:   YouTube video ID
+───────────────────────────────────────────────────── */
+      const VIDEOS = [
+        {
+          featured: true,
+          title: "No Signal — Official Video",
+          meta: "1.4M views · MMXXVI",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          vid: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+        {
+          title: "Jozi After Dark",
+          meta: "820K views · MMXXVI",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          vid: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+        {
+          title: "Motion (Live Session)",
+          meta: "560K views · MMXXV",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          vid: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+        {
+          title: "Concrete (Director's Cut)",
+          meta: "340K views · MMXXIV",
+          thumb: "", // ← YOUR THUMBNAIL IMAGE PATH
+          vid: "dQw4w9WgXcQ", // ← YOUTUBE VIDEO ID
+        },
+      ];
+
+      /* ─────────────────────────────────────────────────────
+   PHOTOSHOOTS CONFIG (film strip — top row)
+   src:     path or URL to image, leave "" for placeholder
+   caption: text shown on hover
+───────────────────────────────────────────────────── */
+      const PHOTOSHOOTS = [
+        { src: "./assets/set1/1.jpeg", caption: "Editorial 01 — Downtown JHB" },
+        { src: "./assets/set1/2.jpeg", caption: "Studio Session — Braamfontein" },
+        { src: "./assets/set1/3.jpeg", caption: "Look Book Vol.1" },
+        { src: "./assets/set1/5.jpeg", caption: "Magazine Feature" },
+        { src: "./assets/set1/6.jpeg", caption: "Campaign — Street" },
+        { src: "./assets/set1/7.jpeg", caption: "Portrait Series 01" },
+        { src: "./assets/set1/8.jpeg", caption: "Behind The Scenes" },
+        { src: "./assets/set1/9.jpeg", caption: "Editorial 02 — Maboneng" },
+        { src: "./assets/set1/10.jpeg", caption: "Studio — Low Light" },
+      ];
+
+      /* ─────────────────────────────────────────────────────
+   STREET PHOTOS CONFIG (grid — bottom)
+   src:     path or URL to image, leave "" for placeholder
+   caption: always visible below photo
+───────────────────────────────────────────────────── */
+      const STREET_PHOTOS = [
+        { src: "./assets/set2/1.jpeg", caption: "Noord Taxi Rank, 6AM" },
+        { src: "./assets/set2/2.jpeg", caption: "Hillbrow — After Rain" },
+        { src: "./assets/set2/3.jpeg", caption: "Soweto, Golden Hour" },
+        { src: "./assets/set2/4.jpeg", caption: "Ponte Tower" },
+        { src: "./assets/set2/5.jpeg", caption: "Park Station" },
+        { src: "./assets/set2/6.jpeg", caption: "Maboneng, Sunday" },
+        { src: "./assets/set2/7.jpeg", caption: "Braamfontein Wall" },
+        { src: "./assets/set2/8.jpeg", caption: "Diagonal Street" },
+        { src: "./assets/set2/9.jpeg", caption: "Commissioner St" },
+        { src: "./assets/set2/10.jpeg", caption: "Newtown Junction" },
+        { src: "./assets/set2/11.jpeg", caption: "Market Theatre Steps" },
+        { src: "./assets/set2/12.jpeg", caption: "Constitution Hill" },
+      ];
+
+      /*════════════════════════════════════════════════════════
+  CORE — do not edit below unless you know what you're doing
+════════════════════════════════════════════════════════*/
+
+      /* ─── PLACEHOLDER GRADIENTS ──────────────────────── */
+      const GRADS = [
+        "linear-gradient(160deg,#0a0a0a 30%,#1a1a1a)",
+        "radial-gradient(ellipse 60% 80% at 40% 30%,#333,#090909)",
+        "linear-gradient(90deg,#050505,#222 50%,#0c0c0c)",
+        "radial-gradient(ellipse at 70% 20%,#3a3a3a,#101010 60%,#060606)",
+        "linear-gradient(210deg,#1c1c1c,#070707)",
+        "radial-gradient(circle at 30% 60%,#2a2a2a,#060606 70%)",
+        "repeating-linear-gradient(0deg,#0a0a0a 0px,#0a0a0a 6px,#181818 6px,#181818 7px)",
+        "linear-gradient(135deg,#111,#2e2e2e 50%,#111)",
+        "radial-gradient(ellipse 100% 40% at 50% 80%,#222,#060606)",
+        "linear-gradient(45deg,#080808,#1f1f1f)",
+        "repeating-linear-gradient(90deg,#0d0d0d 0px,#0d0d0d 18px,#181818 18px,#181818 19px)",
+        "radial-gradient(circle at 50% 50%,#272727,#0a0a0a)",
+      ];
+
+      /* ─── LOADER ──────────────────────────────────────── */
+      const loader = document.getElementById("loader"),
+        lfBar = document.getElementById("lf");
+      let prog = 0;
+      const ldInt = setInterval(() => {
+        prog += Math.random() * 20;
+        if (prog >= 100) {
+          prog = 100;
+          clearInterval(ldInt);
+          setTimeout(() => loader.classList.add("gone"), 280);
+        }
+        lfBar.style.width = prog + "%";
+      }, 75);
+
+      /* ─── GRAIN ──────────────────────────────────────── */
+      (function () {
+        const c = document.createElement("canvas");
+        c.width = c.height = 256;
+        const ctx = c.getContext("2d"),
+          img = ctx.createImageData(256, 256);
+        for (let i = 0; i < img.data.length; i += 4) {
+          const v = (Math.random() * 255) | 0;
+          img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+          img.data[i + 3] = (Math.random() * 36) | 0;
+        }
+        ctx.putImageData(img, 0, 0);
+        document.getElementById("grain").style.backgroundImage =
+          `url(${c.toDataURL()})`;
+      })();
+
+      /* ─── CURSOR ─────────────────────────────────────── */
+      const cd = document.getElementById("cd"),
+        cr = document.getElementById("cr");
+      let mx = -100,
+        my = -100,
+        rx = -100,
+        ry = -100,
+        lastX = 0,
+        lastY = 0,
+        lastT = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cd.style.left = mx + "px";
+        cd.style.top = my + "px";
+        const now = Date.now(),
+          spd = Math.hypot(mx - lastX, my - lastY);
+        if (spd > 20 && now - lastT > 28) {
+          for (let i = 0, cnt = Math.min(4, (spd / 12) | 0); i < cnt; i++) {
+            const s = document.createElement("div");
+            s.className = "spray";
+            const sz = Math.random() * 4 + 2;
+            s.style.cssText = `left:${mx + (Math.random() - 0.5) * 22}px;top:${my + (Math.random() - 0.5) * 22}px;width:${sz}px;height:${sz}px;background:${Math.random() > 0.5 ? "#C8000A" : "rgba(232,228,220,.35)"};`;
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 650);
+          }
+          lastT = now;
+        }
+        lastX = mx;
+        lastY = my;
+      });
+      (function loop() {
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        cr.style.left = rx + "px";
+        cr.style.top = ry + "px";
+        requestAnimationFrame(loop);
+      })();
+      function cursorBig() {
+        cd.style.transform = "translate(-50%,-50%) scale(2.2)";
+        cr.style.opacity = ".2";
+      }
+      function cursorNorm() {
+        cd.style.transform = "translate(-50%,-50%) scale(1)";
+        cr.style.opacity = ".55";
+      }
+      document
+        .querySelectorAll(
+          "a,button,.art-item,.id-tag,.v-tab,.yt-card,.yt-feat-wrap,.sgf,.sf,.pull-quote,.perf-item,.perf-feat",
+        )
+        .forEach((el) => {
+          el.addEventListener("mouseenter", cursorBig);
+          el.addEventListener("mouseleave", cursorNorm);
+        });
+
+      /* ─── THREE.JS HERO ──────────────────────────────── */
+      const hCanvas = document.getElementById("hc");
+      const renderer = new THREE.WebGLRenderer({
+        canvas: hCanvas,
+        alpha: true,
+        antialias: false,
+      });
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+      renderer.setClearColor(0, 0);
+      const scene = new THREE.Scene(),
+        cam = new THREE.PerspectiveCamera(
+          65,
+          innerWidth / innerHeight,
+          0.1,
+          1000,
+        );
+      cam.position.z = 60;
+      const NE = 100,
+        eGeo = new THREE.BufferGeometry(),
+        eP = new Float32Array(NE * 3),
+        eV = new Float32Array(NE * 3);
+      for (let i = 0; i < NE; i++) {
+        eP[i * 3] = (Math.random() - 0.5) * 120;
+        eP[i * 3 + 1] = (Math.random() - 0.5) * 80 - 20;
+        eP[i * 3 + 2] = (Math.random() - 0.5) * 30;
+        eV[i * 3] = (Math.random() - 0.5) * 0.04;
+        eV[i * 3 + 1] = Math.random() * 0.09 + 0.025;
+      }
+      eGeo.setAttribute("position", new THREE.BufferAttribute(eP, 3));
+      const embers = new THREE.Points(
+        eGeo,
+        new THREE.PointsMaterial({
+          color: 0xc8000a,
+          size: 0.65,
+          transparent: true,
+          opacity: 0.55,
+          sizeAttenuation: true,
+          depthWrite: false,
+        }),
+      );
+      scene.add(embers);
+      const NA = 360,
+        aGeo = new THREE.BufferGeometry(),
+        aP = new Float32Array(NA * 3),
+        aV = new Float32Array(NA * 3);
+      for (let i = 0; i < NA; i++) {
+        aP[i * 3] = (Math.random() - 0.5) * 160;
+        aP[i * 3 + 1] = (Math.random() - 0.5) * 100;
+        aP[i * 3 + 2] = (Math.random() - 0.5) * 40;
+        aV[i * 3] = (Math.random() - 0.5) * 0.022;
+        aV[i * 3 + 1] = Math.random() * 0.04 + 0.005;
+      }
+      aGeo.setAttribute("position", new THREE.BufferAttribute(aP, 3));
+      const ash = new THREE.Points(
+        aGeo,
+        new THREE.PointsMaterial({
+          color: 0x888888,
+          size: 0.35,
+          transparent: true,
+          opacity: 0.16,
+          sizeAttenuation: true,
+          depthWrite: false,
+        }),
+      );
+      scene.add(ash);
+      let tCX = 0,
+        tCY = 0,
+        cX = 0,
+        cY = 0;
+      document.addEventListener("mousemove", (e) => {
+        tCX = (e.clientX / innerWidth - 0.5) * 6;
+        tCY = -(e.clientY / innerHeight - 0.5) * 4;
+      });
+      let heroVis = true;
+      new IntersectionObserver(
+        (e) => {
+          heroVis = e[0].isIntersecting;
+        },
+        { threshold: 0 },
+      ).observe(document.getElementById("hero"));
+      (function animHero() {
+        requestAnimationFrame(animHero);
+        if (!heroVis) return;
+        cX += (tCX - cX) * 0.04;
+        cY += (tCY - cY) * 0.04;
+        cam.position.x = cX;
+        cam.position.y = cY;
+        cam.lookAt(0, 0, 0);
+        for (let i = 0; i < NE; i++) {
+          eP[i * 3] += eV[i * 3];
+          eP[i * 3 + 1] += eV[i * 3 + 1];
+          if (eP[i * 3 + 1] > 56) {
+            eP[i * 3] = (Math.random() - 0.5) * 120;
+            eP[i * 3 + 1] = -52;
+          }
+          if (Math.abs(eP[i * 3]) > 66) eV[i * 3] *= -1;
+        }
+        eGeo.attributes.position.needsUpdate = true;
+        for (let i = 0; i < NA; i++) {
+          aP[i * 3] += aV[i * 3];
+          aP[i * 3 + 1] += aV[i * 3 + 1];
+          if (aP[i * 3 + 1] > 62) {
+            aP[i * 3] = (Math.random() - 0.5) * 160;
+            aP[i * 3 + 1] = -58;
+          }
+        }
+        aGeo.attributes.position.needsUpdate = true;
+        embers.rotation.y += 0.00022;
+        ash.rotation.y -= 0.00009;
+        renderer.render(scene, cam);
+      })();
+      window.addEventListener("resize", () => {
+        cam.aspect = innerWidth / innerHeight;
+        cam.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+
+      /* ─── SCROLL ─────────────────────────────────────── */
+      const btt = document.getElementById("btt");
+      const pwords = document.querySelectorAll(".pword[data-speed]");
+      const heroBgImg = document.getElementById("heroBgImg");
+      const idBgImg = document.getElementById("idBgImg");
+      const archBgImg = document.getElementById("archBgImg");
+      function onScroll() {
+        const sy = window.scrollY;
+        btt.classList.toggle("show", sy > 400);
+        document.getElementById("nav").classList.toggle("scrolled", sy > 60);
+        // Parallax words
+        pwords.forEach((el) => {
+          const sect = el.closest("section");
+          if (!sect) return;
+          const rect = sect.getBoundingClientRect();
+          el.style.transform = `translateY(${(innerHeight - rect.top) * parseFloat(el.dataset.speed)}px)`;
+        });
+        // Vinyl parallax
+        document.querySelectorAll(".vw").forEach((v, i) => {
+          v.style.transform = `translateY(${sy * (0.022 + i * 0.007) * (i % 2 === 0 ? 1 : -1)}px)`;
+        });
+        // Hero bg parallax — translate only, no extra scale needed
+        if (heroBgImg) {
+          heroBgImg.style.transform = `translateY(${sy * 0.22}px)`;
+        }
+        // Identity bg parallax
+        if (idBgImg) {
+          const idRect = document
+            .getElementById("identity")
+            .getBoundingClientRect();
+          idBgImg.style.transform = `translateY(${-idRect.top * 0.18}px)`;
+        }
+        // Archive bg parallax
+        if (archBgImg) {
+          const aRect = document
+            .getElementById("archive")
+            .getBoundingClientRect();
+          archBgImg.style.transform = `translateY(${-aRect.top * 0.15}px)`;
+        }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      /* ─── REVEALS ────────────────────────────────────── */
+      const revObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("vis");
+              revObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -36px 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => revObs.observe(el));
+      const lineObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.querySelectorAll(".stag-inner").forEach((el, i) => {
+                el.style.animationDelay = i * 0.13 + "s";
+                el.classList.add("in");
+              });
+              lineObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      document
+        .querySelectorAll(".id-stmt")
+        .forEach((el) => lineObs.observe(el));
+
+      /* ─── HERO META CYCLE ───────────────────────────── */
+      const metaSpans = document.querySelectorAll(".hero-meta span");
+      let mi = 0;
+      setInterval(() => {
+        metaSpans.forEach((s) => s.classList.remove("on"));
+        mi = (mi + 1) % metaSpans.length;
+        metaSpans[mi].classList.add("on");
+      }, 2200);
+
+      /* ─── VAULT TABS ─────────────────────────────────── */
+      document.querySelectorAll(".v-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".v-tab")
+            .forEach((t) => t.classList.remove("on"));
+          document
+            .querySelectorAll(".v-panel")
+            .forEach((p) => p.classList.remove("on"));
+          tab.classList.add("on");
+          document
+            .querySelector(`.v-panel[data-tab="${tab.dataset.tab}"]`)
+            .classList.add("on");
+          if (tab.dataset.tab === "photos") buildPhotos();
+        });
+      });
+
+      /* ─── BUILD PERFORMANCES ─────────────────────────── */
+      (function buildPerf() {
+        const panel = document.getElementById("perfPanel");
+        const layout = document.createElement("div");
+        layout.className = "perf-layout";
+
+        /* Featured — wrap enforces 16:9 via padding-top trick */
+        const featWrap = document.createElement("div");
+        featWrap.className = "perf-feat-wrap";
+        const featSizer = document.createElement("div");
+        featSizer.className = "perf-feat-sizer";
+        const feat = document.createElement("div");
+        feat.className = "perf-feat";
+        const p0 = PERFORMANCES[0];
+        feat.innerHTML = `
+    <div class="perf-feat-thumb">
+      <div class="perf-feat-fallback"></div>
+      ${p0.thumb ? `<img class="perf-feat-img" src="${p0.thumb}" alt="${p0.title}" onerror="this.style.display='none'"/>` : ""}
+    </div>
+    <div class="perf-feat-vignette"></div>
+    <div class="perf-play"></div>
+    <div class="perf-feat-info">
+      <div class="perf-feat-lbl">Featured Performance</div>
+      <div class="perf-feat-title" id="perfFeatTitle">${p0.title}</div>
+      <div class="perf-feat-venue" id="perfFeatVenue">${p0.venue} · ${p0.date}</div>
+    </div>`;
+
+        let activeSrc = p0.src,
+          activeType = p0.type;
+        feat.addEventListener("click", () => {
+          if (feat.querySelector(".perf-embed")) return;
+          const wrap = document.createElement("div");
+          wrap.className = "perf-embed";
+          if (activeType === "youtube") {
+            const ifr = document.createElement("iframe");
+            ifr.src = `https://www.youtube-nocookie.com/embed/${activeSrc}?autoplay=1&rel=0&modestbranding=1`;
+            ifr.allow =
+              "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            ifr.allowFullscreen = true;
+            wrap.appendChild(ifr);
+          } else {
+            const vid = document.createElement("video");
+            vid.src = activeSrc;
+            vid.controls = true;
+            vid.autoplay = true;
+            vid.style.cssText =
+              "width:100%;height:100%;object-fit:cover;background:#000";
+            wrap.appendChild(vid);
+          }
+          const cls = document.createElement("div");
+          cls.className = "perf-close";
+          cls.textContent = "✕";
+          cls.addEventListener("click", (e) => {
+            e.stopPropagation();
+            wrap.remove();
+          });
+          wrap.appendChild(cls);
+          feat.appendChild(wrap);
+        });
+
+        featSizer.appendChild(feat);
+        featWrap.appendChild(featSizer);
+
+        /* Queue */
+        const queue = document.createElement("div");
+        queue.className = "perf-queue";
+        PERFORMANCES.forEach((p, i) => {
+          const item = document.createElement("div");
+          item.className = "perf-item" + (i === 0 ? " active" : "");
+          item.innerHTML = `
+      <div class="perf-item-thumb">
+        <div class="perf-item-fallback"></div>
+        ${p.thumb ? `<img class="perf-item-img" src="${p.thumb}" alt="${p.title}" onerror="this.style.display='none'"/>` : ""}
+        <div class="perf-item-play"><div class="perf-item-play-icon"></div></div>
+      </div>
+      <div class="perf-item-info">
+        <div class="perf-item-title">${p.title}</div>
+        <div class="perf-item-venue">${p.venue}</div>
+        <div class="perf-item-date">${p.date}</div>
+      </div>`;
+          item.addEventListener("click", () => {
+            // Remove existing embed
+            const existing = feat.querySelector(".perf-embed");
+            if (existing) existing.remove();
+            // Update featured info
+            document.getElementById("perfFeatTitle").textContent = p.title;
+            document.getElementById("perfFeatVenue").textContent =
+              `${p.venue} · ${p.date}`;
+            // Update thumbnail
+            const oldImg = feat.querySelector(".perf-feat-img");
+            if (oldImg) oldImg.remove();
+            if (p.thumb) {
+              const img = document.createElement("img");
+              img.className = "perf-feat-img";
+              img.src = p.thumb;
+              img.alt = p.title;
+              img.onerror = function () {
+                this.style.display = "none";
+              };
+              feat.querySelector(".perf-feat-thumb").appendChild(img);
+            }
+            // Update active src
+            activeSrc = p.src;
+            activeType = p.type;
+            // Autoplay
+            const wrap = document.createElement("div");
+            wrap.className = "perf-embed";
+            if (p.type === "youtube") {
+              const ifr = document.createElement("iframe");
+              ifr.src = `https://www.youtube-nocookie.com/embed/${p.src}?autoplay=1&rel=0&modestbranding=1`;
+              ifr.allow =
+                "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+              ifr.allowFullscreen = true;
+              wrap.appendChild(ifr);
+            } else if (p.src) {
+              const vid = document.createElement("video");
+              vid.src = p.src;
+              vid.controls = true;
+              vid.autoplay = true;
+              vid.style.cssText =
+                "width:100%;height:100%;object-fit:cover;background:#000";
+              wrap.appendChild(vid);
+            }
+            if (p.src) {
+              const cls = document.createElement("div");
+              cls.className = "perf-close";
+              cls.textContent = "✕";
+              cls.addEventListener("click", (e) => {
+                e.stopPropagation();
+                wrap.remove();
+              });
+              wrap.appendChild(cls);
+              feat.appendChild(wrap);
+            }
+            // Active state
+            queue
+              .querySelectorAll(".perf-item")
+              .forEach((it) => it.classList.remove("active"));
+            item.classList.add("active");
+            item.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          });
+          queue.appendChild(item);
+        });
+
+        layout.appendChild(featWrap);
+        layout.appendChild(queue);
+        panel.appendChild(layout);
+      })();
+
+      /* ─── BUILD YOUTUBE ──────────────────────────────── */
+      (function buildYT() {
+        const panel = document.getElementById("ytPanel");
+        const featured = VIDEOS.find((v) => v.featured);
+        const cards = VIDEOS.filter((v) => !v.featured);
+
+        if (featured) {
+          const fw = document.createElement("div");
+          fw.className = "yt-feat-wrap";
+          fw.dataset.vid = featured.vid;
+          fw.innerHTML = `
+      <div class="yt-feat-thumb" id="ytFeatThumb">
+        <div class="yt-thumb-fallback"></div>
+        ${featured.thumb ? `<img class="yt-thumb-img" src="${featured.thumb}" alt="${featured.title}" onerror="this.style.display='none'"/>` : ""}
+        <div class="yt-feat-overlay"><div class="yt-play-big"></div></div>
+        <div class="yt-feat-bottom">
+          <div class="yt-feat-lbl">Featured Visual</div>
+          <div class="yt-feat-title">${featured.title}</div>
+          <div class="yt-feat-stats">${featured.meta}</div>
+        </div>
+      </div>`;
+          fw.querySelector(".yt-feat-thumb").addEventListener("click", () => {
+            if (fw.querySelector("iframe")) return;
+            const wrap = document.createElement("div");
+            wrap.className = "yt-embed";
+            const ifr = document.createElement("iframe");
+            ifr.src = `https://www.youtube-nocookie.com/embed/${featured.vid}?autoplay=1&rel=0&modestbranding=1`;
+            ifr.allow =
+              "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            ifr.allowFullscreen = true;
+            wrap.appendChild(ifr);
+            const cls = document.createElement("div");
+            cls.className = "yt-close";
+            cls.textContent = "✕";
+            cls.addEventListener("click", (e) => {
+              e.stopPropagation();
+              wrap.remove();
+            });
+            wrap.appendChild(cls);
+            fw.style.position = "relative";
+            fw.appendChild(wrap);
+          });
+          panel.appendChild(fw);
+        }
+
+        const grid = document.createElement("div");
+        grid.className = "yt-grid";
+        cards.forEach((v, i) => {
+          const card = document.createElement("div");
+          card.className = "yt-card";
+          card.dataset.vid = v.vid;
+          card.innerHTML = `
+      <div class="yt-card-thumb">
+        <div class="yt-card-fallback" style="background:${GRADS[i % GRADS.length]}"></div>
+        ${v.thumb ? `<img class="yt-card-img" src="${v.thumb}" alt="${v.title}" onerror="this.style.display='none'"/>` : ""}
+        <div class="yt-card-play"><div class="yt-play-sm"></div></div>
+      </div>
+      <div class="yt-card-title">${v.title}</div>
+      <div class="yt-card-meta">${v.meta}</div>`;
+          card.querySelector(".yt-card-thumb").addEventListener("click", () => {
+            if (card.querySelector("iframe")) return;
+            const wrap = document.createElement("div");
+            wrap.className = "yt-card-embed";
+            const ifr = document.createElement("iframe");
+            ifr.src = `https://www.youtube-nocookie.com/embed/${v.vid}?autoplay=1&rel=0&modestbranding=1`;
+            ifr.allow =
+              "accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture";
+            ifr.allowFullscreen = true;
+            wrap.appendChild(ifr);
+            card.querySelector(".yt-card-thumb").appendChild(wrap);
+          });
+          grid.appendChild(card);
+        });
+        panel.appendChild(grid);
+      })();
+
+      /* ─── BUILD PHOTOS ───────────────────────────────── */
+      let photosBuilt = false;
+      function buildPhotos() {
+        if (photosBuilt) return;
+        photosBuilt = true;
+
+        /* Film strip */
+        const outer = document.getElementById("filmOuter");
+        const COUNT = PHOTOSHOOTS.length;
+        const FRAME_W = 170; // px per frame — matches .sf width
+        const FRAME_GAP = 3;
+        const RAIL_PAD = 10; // padding each side of sprocket rail
+        const totalStripW = (FRAME_W + FRAME_GAP) * COUNT + RAIL_PAD * 2;
+        const holeW = 16,
+          holeGap = 12,
+          holeUnit = holeW + holeGap;
+        const holeCount = Math.ceil(totalStripW / holeUnit) + 2;
+
+        function mkRail() {
+          const r = document.createElement("div");
+          r.className = "sprocket-rail";
+          r.style.width = totalStripW + "px";
+          r.style.minWidth = "100%";
+          for (let i = 0; i < holeCount; i++) {
+            const h = document.createElement("div");
+            h.className = "sp-hole";
+            r.appendChild(h);
+          }
+          return r;
+        }
+        const row = document.createElement("div");
+        row.className = "strip-row";
+        PHOTOSHOOTS.forEach((p, i) => {
+          const f = document.createElement("div");
+          f.className = "sf";
+          const art = document.createElement("div");
+          art.className = "sf-art";
+          art.style.background = GRADS[i % GRADS.length];
+          if (p.src) {
+            const img = document.createElement("img");
+            img.className = "sf-img";
+            img.src = p.src;
+            img.alt = p.caption;
+            img.onerror = function () {
+              this.style.display = "none";
+            };
+            f.appendChild(img);
+          }
+          const num = document.createElement("span");
+          num.className = "sf-num";
+          num.textContent = String(i + 1).padStart(2, "0") + "A";
+          const cap = document.createElement("div");
+          cap.className = "sf-caption";
+          cap.textContent = p.caption;
+          f.appendChild(art);
+          f.appendChild(num);
+          f.appendChild(cap);
+          f.addEventListener("click", () => openLightbox(i, "shoot"));
+          row.appendChild(f);
+        });
+        outer.appendChild(mkRail());
+        outer.appendChild(row);
+        outer.appendChild(mkRail());
+
+        /* Drag + touch scroll */
+        let isDown = false,
+          startX = 0,
+          sl = 0;
+        const wrap = document.getElementById("filmScrollWrap");
+        wrap.addEventListener("mousedown", (e) => {
+          isDown = true;
+          startX = e.pageX - wrap.offsetLeft;
+          sl = wrap.scrollLeft;
+        });
+        wrap.addEventListener("mouseleave", () => (isDown = false));
+        wrap.addEventListener("mouseup", () => (isDown = false));
+        wrap.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          wrap.scrollLeft = sl - (e.pageX - wrap.offsetLeft - startX);
+        });
+        let tx = 0;
+        wrap.addEventListener(
+          "touchstart",
+          (e) => {
+            tx = e.touches[0].clientX;
+            sl = wrap.scrollLeft;
+          },
+          { passive: true },
+        );
+        wrap.addEventListener(
+          "touchmove",
+          (e) => {
+            wrap.scrollLeft = sl - (e.touches[0].clientX - tx);
+          },
+          { passive: true },
+        );
+
+        /* Street grid */
+        const sg = document.getElementById("streetGrid");
+        STREET_PHOTOS.forEach((p, i) => {
+          const f = document.createElement("div");
+          f.className = "sgf";
+          const art = document.createElement("div");
+          art.className = "sgf-art";
+          art.style.background = GRADS[(i + 4) % GRADS.length];
+          if ([2, 6, 10].includes(i)) {
+            const ov = document.createElement("div");
+            ov.style.cssText =
+              "position:absolute;inset:0;background:rgba(200,0,10,.055)";
+            art.appendChild(ov);
+          }
+          if (p.src) {
+            const img = document.createElement("img");
+            img.className = "sgf-img";
+            img.src = p.src;
+            img.alt = p.caption;
+            img.onerror = function () {
+              this.style.display = "none";
+            };
+            f.appendChild(img);
+          }
+          const num = document.createElement("span");
+          num.className = "sgf-num";
+          num.textContent = String(i + 1).padStart(2, "0");
+          const cap = document.createElement("div");
+          cap.className = "sgf-caption";
+          cap.textContent = p.caption;
+          f.appendChild(art);
+          f.appendChild(num);
+          f.appendChild(cap);
+          f.addEventListener("click", () => openLightbox(i, "street"));
+          sg.appendChild(f);
+        });
+      }
+
+      /* ─── LIGHTBOX ───────────────────────────────────── */
+      const lb = document.getElementById("lightbox"),
+        lbArt = document.getElementById("lb-art"),
+        lbNum = document.getElementById("lb-num"),
+        lbCapText = document.getElementById("lb-caption-text");
+      let lbIdx = 0,
+        lbSet = "shoot";
+      function openLightbox(idx, set) {
+        lbIdx = idx;
+        lbSet = set;
+        const arr = set === "shoot" ? PHOTOSHOOTS : STREET_PHOTOS;
+        const p = arr[idx];
+        lbArt.innerHTML = "";
+        if (p.src) {
+          lbArt.style.background = "#080808";
+          const img = document.createElement("img");
+          img.src = p.src;
+          img.alt = p.caption || "";
+          img.onerror = function () {
+            this.style.display = "none";
+            lbArt.style.background = GRADS[idx % GRADS.length];
+          };
+          lbArt.appendChild(img);
+        } else {
+          lbArt.style.background = GRADS[idx % GRADS.length];
+        }
+        lbNum.textContent =
+          String(idx + 1).padStart(2, "0") + " / " + arr.length;
+        lbCapText.textContent = p.caption || "";
+        lb.classList.add("open");
+      }
+      document
+        .getElementById("lb-close")
+        .addEventListener("click", () => lb.classList.remove("open"));
+      document.getElementById("lb-prev").addEventListener("click", () => {
+        const arr = lbSet === "shoot" ? PHOTOSHOOTS : STREET_PHOTOS;
+        openLightbox((lbIdx - 1 + arr.length) % arr.length, lbSet);
+      });
+      document.getElementById("lb-next").addEventListener("click", () => {
+        const arr = lbSet === "shoot" ? PHOTOSHOOTS : STREET_PHOTOS;
+        openLightbox((lbIdx + 1) % arr.length, lbSet);
+      });
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb) lb.classList.remove("open");
+      });
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        const arr = lbSet === "shoot" ? PHOTOSHOOTS : STREET_PHOTOS;
+        if (e.key === "Escape") lb.classList.remove("open");
+        if (e.key === "ArrowLeft")
+          openLightbox((lbIdx - 1 + arr.length) % arr.length, lbSet);
+        if (e.key === "ArrowRight")
+          openLightbox((lbIdx + 1) % arr.length, lbSet);
+      });
+
+      /* ─── MOBILE NAV ─────────────────────────────────── */
+      const burger = document.getElementById("burger"),
+        navLinks = document.getElementById("navLinks");
+      let navOpen = false;
+      function openNav() {
+        navOpen = true;
+        navLinks.style.cssText =
+          "display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;background:rgba(7,7,7,.97);padding:80px 24px 40px;gap:24px;z-index:999;border-bottom:1px solid rgba(200,0,10,.15)";
+        burger.style.zIndex = "1002";
+        const spans = burger.querySelectorAll("span");
+        spans[0].style.cssText =
+          "transform:rotate(45deg) translate(4px,4px);background:#C8000A";
+        spans[1].style.cssText = "opacity:0";
+        spans[2].style.cssText =
+          "transform:rotate(-45deg) translate(4px,-4px);background:#C8000A";
+      }
+      function closeNav() {
+        navOpen = false;
+        navLinks.style.cssText = "";
+        burger.style.zIndex = "";
+        burger.querySelectorAll("span").forEach((s) => {
+          s.style.cssText = "";
+        });
+      }
+      burger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navOpen ? closeNav() : openNav();
+      });
+      document.addEventListener("click", (e) => {
+        if (
+          navOpen &&
+          !navLinks.contains(e.target) &&
+          !burger.contains(e.target)
+        )
+          closeNav();
+      });
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          if (
+            navOpen &&
+            !navLinks.contains(e.target) &&
+            !burger.contains(e.target)
+          )
+            closeNav();
+        },
+        { passive: true },
+      );
+      navLinks
+        .querySelectorAll("a")
+        .forEach((a) => a.addEventListener("click", closeNav));
+    </script>
+  </body>
 </html>
